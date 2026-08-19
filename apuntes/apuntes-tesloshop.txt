@@ -1,0 +1,117 @@
+React - de cero a experto
+Fernando Herrera
+dev/talles
+
+----------------------------------------------------------------
+✅ Sección 18 - TeloShop - Panel administrativo de productos
+----------------------------------------------------------------
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67104856-introduccion
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67104858-demostracion
+
+Temas puntuales:
+- Rutas
+- QueryParameters
+- Persistencia sin estado
+- Navegación
+- Rutas
+- Fuentes personalizadas (Google Fonts + Taildwind)
+- Transformar código generado por AI a nuestro proyecto
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67104862-inicio-de-proyecto-tesloshop
+
+✅ Inicio del proyecto
+
+Inicializar proyecto:
+- Abrir terminal en directorio del proyecto: npm create vite@latest
+- Need to install the following packages: create-vite@9.1.2 / Yes
+- name: 	teslo-shop
+- framework: 	React
+- Variant: 	TypeScript + SWC ó Typescript
+- Linter: 	ESLint
+- npm install
+- npm run dev
+Opcional si se ha instalado la Variant: Typescript
+  - Instalar SWC si no lo tenemos, con: npm i -D @vitejs/plugin-react-swc
+  - Editar vite.config.ts, cambiar la importación por: import react from '@vitejs/plugin-react-swc'
+  - Eliminar la linea del package.json con: npm uninstall @vitejs/plugin-react
+
+Eliminar elementos del proyecto preinstalado por Vite:
+- /src/app.css y /src/app.tsx
+- /src/index.css - editarlo y borrar su contenido.
+- /src/main.tsx - eliminar el import que da error
+
+Crear nuevo archivo:
+- src/TesloShopApp.tsx y su componente
+- Abrir el archivo src/main.tsx y sustituir el componente <App /> por el nuevo <TesloShopApp /> (requiere import)
+
+Crear estructura inicial de directorios del proyecto:
+
+- src/shop				// Frontend shop
+  -- src/shop/layouts	
+       -> ShopLayout.tsx 		// base páginas shop (comp.)
+  -- src/shop/pages			// Páginas shop
+     --- src/shop/pages/home
+           -> HomePage.tsx		// página home (comp.)
+     --- src/shop/pages/gender		// género
+           -> GenderPage.tsx		// página productos por género (comp.)
+     --- src/shop/pages/product		// producto
+           -> ProductPage.tsx		// página producto (comp.)
+ 
+- src/admin				//Panel administrativo
+  -- src/admin/layouts
+       -> AdminLayout.tsx		// base páginas admin (comp.)
+  -- src/admin/pages
+     --- src/admin/pages/dashboard/
+           -> DashboardPage.tsx		
+     --- src/admin/pages/product/
+           -> AdminProductPage.tsx
+     --- src/admin/pages/products/
+           -> AdminProductsPage.tsx
+
+- src/auth				//Autenticación
+  -- src/auth/layouts
+       -> AuthLayout.tsx		// base páginas auth (comp.)
+  -- src/auth/pages
+     --- src/auth/pages/login
+           -> LoginPage.tsx
+     --- src/auth/pages/register
+           -> RegisterPage.tsx
+     
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67105131-configuracion-del-router
+
+🔷 react-router
+
+En React, React Router es una biblioteca externa de terceros y por lo tanto, se instala como una dependencia en tu proyecto.
+¿Para qué sirve?
+React Router te permite simular la navegación de un sitio web tradicional de múltiples páginas dentro de una aplicación de React, sin recargar la página del navegador.
+Con él puedes:
+  Mostrar diferentes componentes según la URL actual (por ejemplo, / muestra el inicio y /contacto muestra el formulario de contacto).
+  Manejar parámetros dinámicos en las URLs (como /productos/123).
+  Crear rutas protegidas que requieren autenticación.
+
+✅ Configuración del Router
+
+- Crear -> app.router.tsx en la raíz del proyecto
+- instalar la biblioteca externa "react-router", consola: npm i react-router
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
