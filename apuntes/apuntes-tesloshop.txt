@@ -78,6 +78,10 @@ Crear estructura inicial de directorios del proyecto:
      --- src/auth/pages/register
            -> RegisterPage.tsx
      
+Preparar GitHub / Git:
+- Crear repositorio remoto en GitHub
+- Crear reopsitorio local del proyecto con: git init
+- Sincronizar el repo local con el repo remoto en GitHub
 
 🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67105131-configuracion-del-router
 
@@ -87,19 +91,81 @@ En React, React Router es una biblioteca externa de terceros y por lo tanto, se 
 ¿Para qué sirve?
 React Router te permite simular la navegación de un sitio web tradicional de múltiples páginas dentro de una aplicación de React, sin recargar la página del navegador.
 Con él puedes:
-  Mostrar diferentes componentes según la URL actual (por ejemplo, / muestra el inicio y /contacto muestra el formulario de contacto).
-  Manejar parámetros dinámicos en las URLs (como /productos/123).
-  Crear rutas protegidas que requieren autenticación.
+- Mostrar diferentes componentes según la URL actual (por ejemplo, / muestra el inicio y /contacto muestra el formulario de contacto).
+- Manejar parámetros dinámicos en las URLs (como /productos/123).
+- Crear rutas protegidas que requieren autenticación.
 
 ✅ Configuración del Router
 
-- Crear -> app.router.tsx en la raíz del proyecto
-- instalar la biblioteca externa "react-router", consola: npm i react-router
+-> Instalar la biblioteca externa "react-router", consola: npm i react-router
+-> VSC: Crear -> app.router.tsx en la raíz del proyecto y definir las rutas
+- agregar el <RouterProvider /> al render de TesloShopApp.tsx
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67105582-tailwind-shadcn-ui-google-fonts
+
+🔷 Tailwindcss - Librería CSS
+
+- Instalar la librería de Tailwindcss para vite: npm install tailwindcss @tailwindcss/vite
+- VSC: Pegar el import de tailwindcss en src/index.css: @import "tailwindcss";
+
+- tsconfig.json, despues de "references" agregar es código:
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {"@/*": ["./src/*"]}
+  	}
+
+- tsconfig.app.json, dentro de "CompilerOptions":( agregar:
+	"baseUrl": ".",
+	"paths": {
+		"@/*": [
+			"./src/*"
+		]
+	}
+	
+- Instalar: npm install -D @types/node
+
+- vite.config.ts, pegar el código:
+	import path from "path"
+	import tailwindcss from "@tailwindcss/vite"
+
+	- dentro de defineConfig({
+
+	plugins: [react(), tailwindcss()],
+	resolve: {
+		alias: {
+			"@": path.resolve(__dirname, "./src"),
+		},
+	},
+
+
+🔷 shadcn - Librería de componentes - https://ui.shadcn.com/
+
+- Instalar la librería de componentes shadcn para Vite: npx shadcn@latest init
+-> Need to install the following packages: shadcn@4.18.0 - pulsar Yes
+-> Select a component library » - Use arrow-keys. Return to submit: > Base UI (Recommended)
+-> Which preset would you like to use? : Nova
+- Tras la instalación:
+  - el archivo src/index.css ahora contiene código css, 
+  - se ha creado el directorio src/components/ui con el componente button.tsx
+  - se ha creado el directorio src/lib con el archivo utils.ts
+- Para instalar un nuevo componente: npx shadcn@latest add
+- y seleccionar el componente que una vez instalado aparecerá en src/components/ui
  
+-> VSC: Para probar, Agregar comp. <Button>Botón</ Button>, al HomePage.tsx
+-  🚨 En ShopLayout.tsx agregar el comp <Outlet />, para que se rendericen las rutas hijas del element: <ShopLayout />,
 
+🔷 Google Fonts 
 
-
+-> https://fonts.google.com/specimen/Montserrat+Alternates
+- Botón "Get Fonts" / botón "<> Get embed code" 
+- Botón "Chage styles" y seleccionar o dejar los estilos por defecto a importar
+- Copiar el código de: web / Embed code in the <head> of your html /
+-> VSC: editar el index.html y pegar el código dentro del <head> 
+- editar el archivo src/index.css y crear un tema para la fuente, agregando al final, este código:
+	@theme {
+		--font-montserrat: "Montserrat Alternates", sans-serif;
+	}
+-> Con esto podemos agregar el tipo de fuente como una clase, en el atributo: className="font-montserrat"
 
 
 
