@@ -167,6 +167,24 @@ Con él puedes:
 	}
 -> Con esto podemos agregar el tipo de fuente como una clase, en el atributo: className="font-montserrat"
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67106329-diseno-del-homepage
+
+Repo de GitHub, para extraer el código del diseño del homepage:
+	https://github.com/DevTalles-corp/threads-of-tesla-style
+
+-> GitHub: Crear un fork del repo del material adjunto, desde nuestra cuenta de GitHub
+- 🚨 Estando en el nuevo repo, pulsando la tecla punto (.), se abre un VSC dentro de GitHub, para poder explorar el proyecto con VSC,
+- Extraer el código de renderizado, desde src/pages/index.tsx del repo de diseño, a nuestro proyecto src/shop /layouts y /pages:
+  - crear src/shop/components/CustomHeader.tsx , comp. que usaremos solo en shop, pegar el código del comp. src/components/us/Header.tsx del repo diseño.
+  - Terminal: Agregar el comp. input de shadcn con: npx shadcn@latest add y revisar el código.
+  - Continuar extrayendo las secciones desde src/pages/index.tsx y agregarlas a nustro src/shop...
+
+🔷 jumbotron
+En diseño web, un jumbotron (también escrito a veces como jumbo tron) es un componente visual destacado que se utiliza para llamar la atención del usuario hacia un contenido principal, un mensaje clave o una llamada a la acción (Call to Action).
+
+  - Crear comp. src/shop/components/CustomJumbotron.tsx y pergarel código (Hero Secction) copiado del index.tsx del repo del diseño y adaptarlo.
+  - Crear comp. src/shop/components/CustomFooter.tsx y pergarel código (Footer) copiado del index.tsx del repo del diseño y adaptarlo.
+
 
 
 
