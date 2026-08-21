@@ -3,8 +3,39 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { useSearchParams } from "react-router";
 
 export const FilterSidebar = () => {
+
+  // retorna url params de la url activa, y func. para actualizar sus estados
+  const [searchParams, setSearchParams ] = useSearchParams();
+
+  // obtiene los valores (xl,l,s) del url param 'sizes' de searchParams,
+  // si otiene valores ? los convierte a arreglo, si no ||, retorna []
+  const currentSizes = searchParams.get('sizes')?.split(',') || []; 
+
+  // func. manejadora de las tallas sizes, recibe size
+  const handleSizeChanged = ( size: string ) => {
+    // determina si currentSizes contiene la size recibida:
+    const newSizes = currentSizes.includes(size)
+      // si la contiene, filtra el arreglo y obtiene un nuevo arreglo
+      // solo con las tallas (s) diferentes a la talla recibida
+      ? currentSizes.filter( s => s !== size )
+      // si NO la contiene, propaga y agrega el valor de la nueva talla recibida, al arreglo
+      : [... currentSizes, size]
+    // el resultado se asigna a newSizes
+
+    // asigna '1' al valor de la paginación 
+    searchParams.set('page', '1');
+
+    // agrega al url param 'sizes', los nuevos valores del arreglo newSizes
+    // separados por comas como string
+    searchParams.set('sizes', newSizes.join(','))
+
+    // Actualiza la url, con el nuevo estado de los params de searchParams,
+    // preservando los valores de los params existentes
+    setSearchParams(searchParams);
+  };
 
   const sizes = [
     { id: "xs", label: "XS" },
@@ -25,12 +56,16 @@ export const FilterSidebar = () => {
       <div className="space-y-4">
         <h4 className="font-medium">Tallas</h4>
         <div className="grid grid-cols-3 gap-2">
+          {/* mapea el arreglo sizes y por cada elemento size,
+              crea un botón con una key única */}
           {sizes.map((size) => (
             <Button
               key={size.id}
-              variant="outline"
+              //si la talla ya estaba seleccionada, botón variante= 'default', si no, 'outline'
+              variant={ currentSizes.includes(size.id) ? 'default' : 'outline'}
               size="sm"
               className="h-8"
+              onClick={() => handleSizeChanged(size.id)}
             >
               {size.label}
             </Button>

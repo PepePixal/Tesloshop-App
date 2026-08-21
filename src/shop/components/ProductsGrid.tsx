@@ -71,23 +71,26 @@ export const ProductsGrid = ({products}: Props) => {
                 </div>
 
                 <div className="flex gap-8">
+
                     {/* Filters Sidebar - Desktop */}
                     <div className="hidden lg:block">
                         <FilterSidebar />
                     </div>
 
                     {/* Mobile Filters */}
+                    {/* si showFilters es true, se renderiza, pero si la pantalla es large,
+                     se oculta con el @media lg:hidden */}
                     {showFilters && (
                         <div className="fixed inset-0 z-50 bg-background p-4 lg:hidden">
                             <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-lg font-semibold">Filtros</h3>
-                            <Button 
-                                variant="ghost" 
-                                size="sm"
-                                onClick={() => setShowFilters(false)}
-                            >
-                                Cerrar
-                            </Button>
+                                <h3 className="text-lg font-semibold">Filtros</h3>
+                                <Button 
+                                    variant="ghost" 
+                                    size="sm"
+                                    onClick={() => setShowFilters(false)}
+                                >
+                                    Cerrar
+                                </Button>
                             </div>
                             <FilterSidebar />
                         </div>
@@ -115,6 +118,7 @@ export const ProductsGrid = ({products}: Props) => {
                             ))};
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </section>
