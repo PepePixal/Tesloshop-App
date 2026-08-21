@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@/mocks/products.mock";
-import { ChevronLeft, ChevronRight, Filter, Grid, List } from "lucide-react";
+import { Filter, Grid, List } from "lucide-react";
 import { ProductCard } from "./ProductCard";
 import { FilterSidebar } from "./FilterSidebar";
 import { useSearchParams } from "react-router";
@@ -10,6 +11,9 @@ interface Props {
 }
 
 export const ProductsGrid = ({products}: Props) => {
+
+    // var de estado para la vista de filtros en modo Mobile
+    const [ showFilters, setShowFilters] = useState(false)
 
     // retorna los params de la url activa y la func para actualizarlos
     const [ searchParams, setSearchParams ] = useSearchParams();
@@ -38,7 +42,7 @@ export const ProductsGrid = ({products}: Props) => {
                         <Button
                             variant="outline"
                             size="sm"
-                            // onClick={() => setShowFilters(!showFilters)}
+                            onClick={() => setShowFilters(!showFilters)}
                             className="lg:hidden"
                         >
                             <Filter className="h-4 w-4 mr-2" />
@@ -73,7 +77,7 @@ export const ProductsGrid = ({products}: Props) => {
                     </div>
 
                     {/* Mobile Filters */}
-                    {/* {showFilters && (
+                    {showFilters && (
                         <div className="fixed inset-0 z-50 bg-background p-4 lg:hidden">
                             <div className="flex items-center justify-between mb-6">
                             <h3 className="text-lg font-semibold">Filtros</h3>
@@ -87,7 +91,7 @@ export const ProductsGrid = ({products}: Props) => {
                             </div>
                             <FilterSidebar />
                         </div>
-                    )}; */}
+                    )}
 
                     {/* Products Grid */}
                     <div className="flex-1">
