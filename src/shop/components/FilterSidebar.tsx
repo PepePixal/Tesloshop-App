@@ -12,7 +12,10 @@ export const FilterSidebar = () => {
 
   // obtiene los valores (xl,l,s) del url param 'sizes' de searchParams,
   // si otiene valores ? los convierte a arreglo, si no ||, retorna []
-  const currentSizes = searchParams.get('sizes')?.split(',') || []; 
+  const currentSizes = searchParams.get('sizes')?.split(',') || [];
+  
+  //obtiene el valor del url param 'price' o asigna 'any'
+  const currentPrice = searchParams.get('price') || 'any';
 
   // func. manejadora de las tallas sizes, recibe size
   const handleSizeChanged = ( size: string ) => {
@@ -25,7 +28,7 @@ export const FilterSidebar = () => {
       : [... currentSizes, size]
     // el resultado se asigna a newSizes
 
-    // asigna '1' al valor de la paginación 
+    // asigna '1' al valor de la paginación,
     searchParams.set('page', '1');
 
     // agrega al url param 'sizes', los nuevos valores del arreglo newSizes
@@ -36,6 +39,20 @@ export const FilterSidebar = () => {
     // preservando los valores de los params existentes
     setSearchParams(searchParams);
   };
+
+  // func. manejo cambios prcios del filtro, recibe price
+  const handlePriceChange = ( price: string ) => {
+
+    // asigna '1' al valor de la paginación 
+    searchParams.set('page', '1');
+
+    // asigna el valor del param recibido price, al url param 'price'
+    searchParams.set('price', price);
+
+    // Actualiza la url, con el nuevo estado de los params de searchParams,
+    // preservando los valores de los params existentes
+    setSearchParams(searchParams);
+  }
 
   const sizes = [
     { id: "xs", label: "XS" },
@@ -78,9 +95,13 @@ export const FilterSidebar = () => {
       {/* Price Range */}
       <div className="space-y-4">
         <h4 className="font-medium">Precio</h4>
-        <RadioGroup defaultValue="" className="space-y-3">
+        <RadioGroup 
+          className="space-y-3"
+          value={currentPrice} 
+          onValueChange={(value) => handlePriceChange(value)}
+        >
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="any" id="priceAny" />
+            <RadioGroupItem value="any" id="priceAny"/>
             <Label htmlFor="priceAny" className="text-sm cursor-pointer">Cualquier precio</Label>
           </div>
           <div className="flex items-center space-x-2">

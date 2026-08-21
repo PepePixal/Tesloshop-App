@@ -219,14 +219,11 @@ Solo necesitaremos una variable de estado useState, para determinar si un menú 
 - ProductsGrid.tsx:
 
 - Definir el hook de react-router useSearchParams(), para obtener los parámetros que se transmitirán a través de la url.
-
 - Obtener el valor de url param 'viewMode', que contiene el modo de vista (viewMode) seleccionado, asignado por el botón "grid" o "lista",
 - descomentar el código donde se está usando la const viewMode. Los productos se deberían ver en modo grid, por defecto, en el navegador.
-
-- Crear la func handleViewModeChange, para manejar el modo de vista, a través del url param 'viewMode'
+- Crear la func handleViewModeChange, para manejar el modo de vista, a través del url param 'viewMode',
 - asignar la func a los botones que manejan el modo de vista. Deberían funcionar los botones grid y list en la web.
-
-- código /*Mobile Filters*/. La vista de los filtros, en modo Mobile, estará condicionada al valor booleano de la variable de estado showFilters.
+- Código /*Mobile Filters*/. La vista de los filtros, en modo Mobile, estará condicionada al valor booleano de la variable de estado showFilters.
 - Definir la var de estado showFilters con useState, descomentar el código /*Mobile Filters*/
 
 - FilterSidebar.tsx:
@@ -235,6 +232,14 @@ Solo necesitaremos una variable de estado useState, para determinar si un menú 
 - Definir la func. manejadora de las tallas, a través del url param. La func recibe el parámetro size
 - Agregar a los botones de tallas, la prop onClick, con func call-back que llama a la función manejadora handleSizeChanged, enviando la size.id
 - definir condicional que asigne el valor de la prop visual 'variant=' del botón de talla, según este o no seleccionado
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67108247-sidebar-filtro-del-precio
+
+- Obtener el valor de la url prop 'price' o si no tiene, asignar 'any' y almacenarlo en la var currentPrice
+- Crear func handlePrice, para manejar el los valores del filtro de precios, a través de la url
+- En el <RadioGroup: asignar {currentPrice} a la prop value y agregar la prop onValueChange que llama al manejador handlePriceChange. 🚨 Solución diferente a la del curso, porque la prop checked ya no existe en <RadioGroupItem.
+
+
 
 
 
