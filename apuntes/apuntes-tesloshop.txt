@@ -185,6 +185,44 @@ En diseño web, un jumbotron (también escrito a veces como jumbo tron) es un co
   - Crear comp. src/shop/components/CustomJumbotron.tsx y pergarel código (Hero Secction) copiado del index.tsx del repo del diseño y adaptarlo.
   - Crear comp. src/shop/components/CustomFooter.tsx y pergarel código (Footer) copiado del index.tsx del repo del diseño y adaptarlo.
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67106838-homepage-paginacion-y-productos
+
+- Crear directorio y archivo comp. src/components/custom/CustomPagination.tsx, pegar el código del comp. de paginación del proyecto heroes,
+- asegurar que el nombre del componente es el mismo que el del archivo .tsx y revisar el código
+- agregar el comp. <CustomPagination /> a src/shop/home/HomePage.tsx
+
+- Crear src/mocks/products.mock.ts y pegar el contenido de src/data/products.ts del repo remoto forkeado treads-of-tesla-style (posteriormente obtendremos la data de una BD)
+
+- Copiar las imgs de src/assets/ del repo forkeado y pegarlas en src/assets de nuestro proyecto:
+  - las imgs se pueden descargar directamente desde la carpeta del repo forkeado, haciendo clic derecho sobre la carpeta /assets y "Descargar..."
+- ser descargará la carpeta /assets dentro de la carpeta /assets/assets del proyecto, mover las imgs a la carpeta src/assets y eliminar la que sobra.
+
+- Copiar todo el código de la <section {/* Products Section */} del src/pages/index.tsx del repo forkeado,
+- Crear comp. src/shop/components/ProductsGrid.tsx y en el render, pegar el código copiado. Ajustar el código (eliminar la Paginación).
+
+- Copiar todo el código del comp. src/components/ProductCard.tsx del repo forkeado
+- Crear el archivo src/shop/componentes/ProductCard.tsx y pegar el código copiado. Modificar el código, eliminar el export default y agregar el export al comp., comprobar el nombre del comp., instalar el comp card de shadcn: npx shadcn@latest add card, etc.
+- En src/shop/components/ProductsGrid.tsx importar el comp. <ProductCard
+
+- Copiar todo el código del comp. src/components/FilterSidebar.tsx del repo forkeado
+- Crear el archivo src/shop/componentes/FilterSidebar.tsx y pegar el código copiado. Modificar el código, eliminar el export default y agregar el export al comp., comprobar el nombre del comp., instalar los comps separator, radio-group, label de shadcn con: npx shadcn@latest add, eliminar const categories y const colors
+- En src/shop/components/ProductsGrid.tsx importar el comp. <FilterSidebar
+
+- ProductsGrid.tsx: comentar el código que todavía está dando error, para poder ver, temporalmente, el componente en la página HomePage.tsx, en el navegador.
+- HomePage.tsx: agregar el comp <ProductsGrid /> enviando products={products} del mock, antes del <CustomPagination />
+
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67107625-homepage-parametros-por-url
+
+Solo necesitaremos una variable de estado useState, para determinar si un menú esta abierto o no, cuando la app está en modo responsive, el resto de parámetros los manejaremos a través de la url.
+
+- ProductsGrid.tsx: Definir el hook de react-router useSearchParams(), para obtener los parámetros que se transmitirán a través de la url.
+
+- Obtener el valor de url param 'viewMode', que contiene el modo de vista (viewMode) seleccionado, asignado por el botón "grid" o "lista",
+- descomentar el código donde se está usando la const viewMode. Los productos se deberían ver en modo grid, por defecto, en el navegador.
+- Crear la func handleViewModeChange, para manejar el modo de vista, a través del url param 'viewMode'
+- asignar la func a los botones que manejan el modo de vista. Deberían funcionar los botones grid y list en la web.
+
 
 
 
