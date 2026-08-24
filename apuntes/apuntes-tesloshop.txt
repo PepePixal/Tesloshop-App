@@ -137,6 +137,7 @@ Con él puedes:
 		},
 	},
 
+-----
 
 🔷 shadcn - Librería de componentes - https://ui.shadcn.com/
 
@@ -154,6 +155,8 @@ Con él puedes:
 -> VSC: Para probar, Agregar comp. <Button>Botón</ Button>, al HomePage.tsx
 -  🚨 En ShopLayout.tsx agregar el comp <Outlet />, para que se rendericen las rutas hijas del element: <ShopLayout />,
 
+-----
+
 🔷 Google Fonts 
 
 -> https://fonts.google.com/specimen/Montserrat+Alternates
@@ -166,6 +169,9 @@ Con él puedes:
 		--font-montserrat: "Montserrat Alternates", sans-serif;
 	}
 -> Con esto podemos agregar el tipo de fuente como una clase, en el atributo: className="font-montserrat"
+
+-----
+
 
 🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67106329-diseno-del-homepage
 
@@ -182,8 +188,11 @@ Repo de GitHub, para extraer el código del diseño del homepage:
 🔷 jumbotron
 En diseño web, un jumbotron (también escrito a veces como jumbo tron) es un componente visual destacado que se utiliza para llamar la atención del usuario hacia un contenido principal, un mensaje clave o una llamada a la acción (Call to Action).
 
+-----
+
   - Crear comp. src/shop/components/CustomJumbotron.tsx y pergarel código (Hero Secction) copiado del index.tsx del repo del diseño y adaptarlo.
-  - Crear comp. src/shop/components/CustomFooter.tsx y pergarel código (Footer) copiado del index.tsx del repo del diseño y adaptarlo.
+  - Crear comp. src/shop/components/CustomFooter.tsx y purgar el código (Footer) copiado del index.tsx del repo del diseño y adaptarlo.
+
 
 🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67106838-homepage-paginacion-y-productos
 
@@ -233,32 +242,95 @@ Solo necesitaremos una variable de estado useState, para determinar si un menú 
 - Agregar a los botones de tallas, la prop onClick, con func call-back que llama a la función manejadora handleSizeChanged, enviando la size.id
 - definir condicional que asigne el valor de la prop visual 'variant=' del botón de talla, según este o no seleccionado
 
+
 🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67108247-sidebar-filtro-del-precio
 
 - Obtener el valor de la url prop 'price' o si no tiene, asignar 'any' y almacenarlo en la var currentPrice
 - Crear func handlePrice, para manejar el los valores del filtro de precios, a través de la url
 - En el <RadioGroup: asignar {currentPrice} a la prop value y agregar la prop onValueChange que llama al manejador handlePriceChange. 🚨 Solución diferente a la del curso, porque la prop checked ya no existe en <RadioGroupItem.
 
+
 🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67115082-logica-adicional-de-la-busqueda
 
 El buscador del Header de shop, lo gestionaremos también con query parameters, pasando y consultando parámetros en la url.
-
-CustomHeader.tsx
 
 🔷 useRef
 Es un Hook de react que te permite crear una referencia mutable que persiste durante todo el ciclo de vida del componente.
 Este hook devuelve un objeto con una única propiedad llamada current (ej. miRef.current), la cual puedes leer y modificar libremente.
 Para conectar el useRef con el elemento html tipo <Input, agregar al <Input la propiedad ref={nom_var_del_useRef}
 A diferencia del estado (useState), actualizar un useRef no provoca un re-renderizado del componente.
+-----
+
+🔷 URLSearhParams
+En JavaScript en general, URLSearchParams es una interfaz nativa del navegador que sirve para leer, crear y manipular los parámetros de consulta (query parameters) de una URL, es decir, todo lo que viene después del signo de interrogación (?) en una dirección web.
+No es una característica exclusiva de React, pero se utiliza muchísimo en aplicaciones de React (junto con librerías como React Router o el hook nativo window.location) para gestionar el estado de la URL.
+Cuando creas una instancia de URLSearchParams, esta retorna un objeto iterable (específicamente, un objeto de tipo URLSearchParams que actúa como un mapa o diccionario) que contiene todos los pares de clave-valor extraídos de la cadena de consulta de la URL.
+A diferencia de un objeto de JavaScript tradicional ({}), este objeto no es un objeto plano, sino una estructura especial que viene con sus propios métodos integrados para consultar y modificar los datos.
+🚨 A diferencia de useSearchParam, NO es reactivo por sí solo. Si la URL cambia, no re-renderiza tu componente automáticamente a menos que lo programes manualmente.
+
+-----
+
+CustomHeader.tsx
 
 - Declarar el hook de react-route useSearchParams()
 - Declarar el hook de react useRef, para obtener el valor del input referenciado y asignarlo a la var inputRef
 - Conectar o referenciar el elemento html <Input, agregándole la prop ref={inputRef}
 - Función manejadora del keyDown del input. Reseteando el URL
 
+
 🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67115302-navegacion-entre-pantallas
 
+🔷 <Link ...> ... </ Link>
+En React, específicamente cuando se usa la librería de enrutamiento React Router, el componente <Link> es el elemento estándar utilizado para navegar entre diferentes páginas o vistas de una aplicación de una sola página (SPA, por sus siglas en inglés).
+A diferencia de la etiqueta HTML tradicional (<a>), <Link> permite cambiar de ruta sin necesidad de recargar la página completa.
 
+<NavLink>: Es una versión especial de <Link> que sabe si la ruta actual está activa o no. Es sumamente útil para menús de navegación, ya que te permite añadir automáticamente una clase CSS (como active) al enlace en el que se encuentra el usuario actualmente.
+
+----
+
+🔷 useParams - (Parámetros de ruta)
+Es un Hook de React Router que sirve para acceder a los parámetros dinámicos (segmentos de ruta) de la URL actual, dentro de una aplicación de React.
+Cuando defines rutas dinámicas (por ejemplo, para mostrar el perfil de un usuario o los detalles de un producto), useParams te permite extraer fácilmente ese valor de la ruta para usarlo en tu componente (hacer una petición a una API, mostrar un título, etc.).
+
+El hook useParams retorna un objeto JavaScript que contiene los pares clave-valor de los parámetros dinámicos de la URL actual.
+Las claves corresponden a los nombres que definiste en la ruta precedidos por dos puntos :. Ejemplo: gender/:gender, clave = gender
+Los valores son siempre cadenas de texto (strings) con lo que hayamos escrito realmente en la URL, valor = 'woman'
+
+1. ¿Cómo se define la ruta?
+En la configuración de tus rutas, marcas una sección de la URL como dinámica agregando dos puntos (:) antes del nombre del parámetro: /product/:idSlug
+2. ¿Cómo se consume con useParams?
+Dentro del componente que renderiza esa ruta, llamas a useParams(). Este devolverá un objeto con los pares clave-valor de los parámetros de la URL
+
+---
+🔷 cn
+
+En el ecosistema de React (especialmente cuando se trabaja con Tailwind CSS y librerías populares como shadcn/ui), cn es una función utilitaria muy común que sirve para combinar, fusionar y gestionar clases de CSS de forma inteligente y condicional.
+Su nombre viene de una abreviatura común para Class Name (nombre de clase).
+La función cn no es una función nativa de React ni de JavaScript, sino que es la combinación de dos librerías externas muy potentes:
+- clsx: Permite añadir clases de forma condicional (usando objetos, arrays o booleanos) sin complicarte con strings kilométricos. 
+- tailwind-merge (twMerge): Resuelve los conflictos específicos de Tailwind CSS. Por ejemplo, si combinas px-2 y px-4, sabe que debe eliminar el primero y quedarse con el último.
+Requiere importación con: import { cn } from "@/lib/utils";
+¿Qué hace exactamente?
+- Maneja condicionales limpiamente: Te permite activar o desactivar clases según el estado de tus variables o props.
+- Elimina conflictos de Tailwind: Si un componente reutilizable ya trae un estilo por defecto (ej. bg-blue-500) y desde fuera le pasas otro (bg-red-500), cn se encarga de sobrescribirlo correctamente sin que Tailwind entre en conflicto o aplique estilos duplicados.
+- Acepta múltiples formatos: Puedes pasarle strings, objetos condicionales o arrays indistintamente.  
+
+
+CustomHeader.tsx
+
+- Sustituir las etiquetas html <a> </a> por el componente de react router <Link > </ Link> y las props href= por las props to=
+- Declarar el hook de react-router useParams() y desestructurar el parámetro obligatorio con llave gender y su 'valor' string
+- Agregar condición con cn(), para cambiar dinámicamente el estilo (className) del nombre del Link del menú, según el valor del url param gener
+
+GenderPage.tsx
+
+- Copiar el renderizado de HomePage.tsx y pegarlo en el renderizado de GdenderPage.tsx
+- importar lo necesario y adaptar el código de GenderPage.tsx
+
+CustomHeader.tsx
+
+- Eliminar el código del <Button <ShoppingBag, del carrito de compras y
+- en su lugar agregar un <Link to= > con un <Button> Login y otro <Link to= > con un <Button> Admin
 
 
 

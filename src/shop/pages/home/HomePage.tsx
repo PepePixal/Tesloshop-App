@@ -8,11 +8,11 @@ export const HomePage = () => {
   return (
     <>
     
-    <CustomJumbotron title='Todos los productos' />
+      <CustomJumbotron title='Todos los productos' />
 
-    <ProductsGrid products={products}/>
+      <ProductsGrid products={products}/>
 
-    <CustomPagination totalPages={7} />
+      <CustomPagination totalPages={7} />
     
     </>
   )
