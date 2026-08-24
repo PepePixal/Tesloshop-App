@@ -239,6 +239,30 @@ Solo necesitaremos una variable de estado useState, para determinar si un menú 
 - Crear func handlePrice, para manejar el los valores del filtro de precios, a través de la url
 - En el <RadioGroup: asignar {currentPrice} a la prop value y agregar la prop onValueChange que llama al manejador handlePriceChange. 🚨 Solución diferente a la del curso, porque la prop checked ya no existe en <RadioGroupItem.
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67115082-logica-adicional-de-la-busqueda
+
+El buscador del Header de shop, lo gestionaremos también con query parameters, pasando y consultando parámetros en la url.
+
+CustomHeader.tsx
+
+🔷 useRef
+Es un Hook de react que te permite crear una referencia mutable que persiste durante todo el ciclo de vida del componente.
+Este hook devuelve un objeto con una única propiedad llamada current (ej. miRef.current), la cual puedes leer y modificar libremente.
+Para conectar el useRef con el elemento html tipo <Input, agregar al <Input la propiedad ref={nom_var_del_useRef}
+A diferencia del estado (useState), actualizar un useRef no provoca un re-renderizado del componente.
+
+- Declarar el hook de react-route useSearchParams()
+- Declarar el hook de react useRef, para obtener el valor del input referenciado y asignarlo a la var inputRef
+- Conectar o referenciar el elemento html <Input, agregándole la prop ref={inputRef}
+- Función manejadora del keyDown del input. Reseteando el URL
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67115302-navegacion-entre-pantallas
+
+
+
+
+
+
 
 
 
