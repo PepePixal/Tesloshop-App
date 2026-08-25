@@ -115,7 +115,7 @@ export const ProductsGrid = ({products}: Props) => {
                                     image={product.image}
                                     category={product.category}
                                 />
-                            ))};
+                            ))}
                         </div>
                     </div>
                     

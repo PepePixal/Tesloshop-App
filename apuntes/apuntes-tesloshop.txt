@@ -332,6 +332,10 @@ CustomHeader.tsx
 - Eliminar el código del <Button <ShoppingBag, del carrito de compras y
 - en su lugar agregar un <Link to= > con un <Button> Login y otro <Link to= > con un <Button> Admin
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67115580-logo-personalizado
+
+- Crear un nuevo componente reutilizable para le logo: src/components/custom/CustomLogo.tsx
+- Sustituir el logo crudo por el comp <CustomLogo /> en: src/shop/components/CustomHeader.tsx ,CustomFooter.tsx
 
 
 

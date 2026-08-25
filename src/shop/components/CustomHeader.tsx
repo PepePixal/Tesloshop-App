@@ -1,10 +1,11 @@
 
 import { useRef, type KeyboardEvent } from "react";
 import { Link, useParams, useSearchParams } from "react-router";
-import { Search, Menu } from "lucide-react";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { CustomLogo } from "@/components/custom/CustomLogo";
 
 export const CustomHeader = () => {
 
@@ -13,7 +14,7 @@ export const CustomHeader = () => {
 
   // obtener los parámetros de la ruta
   const { gender } = useParams();
-  console.log({gender});
+  //console.log({gender});
 
   // retorna obj. para almacenar (valor del elemento html Input referido), inicializado a null.
   // La modificación del valor del obj. generado con el useRef NO rerenderiza
@@ -55,12 +56,7 @@ export const CustomHeader = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="h-5 w-5" />
-            </Button>
-            <h1 className="text-xl font-semibold tracking-tight">TESLA STYLE</h1>
-          </div>
+          <CustomLogo />
 
           {/* Navigation - Desktop */}
           <nav className="hidden md:flex items-center space-x-8">
