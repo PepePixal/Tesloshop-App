@@ -337,6 +337,23 @@ CustomHeader.tsx
 - Crear un nuevo componente reutilizable para le logo: src/components/custom/CustomLogo.tsx
 - Sustituir el logo crudo por el comp <CustomLogo /> en: src/shop/components/CustomHeader.tsx ,CustomFooter.tsx
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67115679-diseno-del-login-y-registro
+
+- Crear fork de: https://github.com/Klerith/v0-two-card-login, que contiene el diseño de las Cards de Login
+- Editar el fork en nuestro usuario de GitHub, con la tecla punto (.), dentro de GitHub se abre un VSC con el proyecto.
+
+- En el fork, editar app/login/page.tsx copiar el código de dentro del return y pegarlo en el return de nuestro src/auth/layouts/AuthLayout.tsx
+- sustituir el comp <LoginForm /> por un comp. <Outlet />, requiere import de react-router
+
+- En el fork, editar components/login-form.tsx, copiar todo el código y editar nuestro src/auth/pages/login/LoginPage.tsx borrar el código y pegar todo el código copiado del fork.
+- Modificar la declaración del componente, export const LoginPage =() => {} y personalizar el resto del código.
+
+- Copiar el código de nuestro LoginPage.tsx personalizado, pegarlo en src/auth/pages/register/RegisterPage.tsx, export const RegisterPage =() => {} y personalizar el resto del código.
+
+
+
+
+
 
 
 
