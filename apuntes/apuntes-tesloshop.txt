@@ -339,7 +339,9 @@ CustomHeader.tsx
 
 🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67115679-diseno-del-login-y-registro
 
-- Crear fork de: https://github.com/Klerith/v0-two-card-login, que contiene el diseño de las Cards de Login
+El repositorio con el código del diseño de la page de Login esta en: https://github.com/Klerith/v0-two-card-login 
+
+- Desde nuestra cuenta de GitHub, hacer fork de: https://github.com/Klerith/v0-two-card-login,
 - Editar el fork en nuestro usuario de GitHub, con la tecla punto (.), dentro de GitHub se abre un VSC con el proyecto.
 
 - En el fork, editar app/login/page.tsx copiar el código de dentro del return y pegarlo en el return de nuestro src/auth/layouts/AuthLayout.tsx
@@ -350,9 +352,32 @@ CustomHeader.tsx
 
 - Copiar el código de nuestro LoginPage.tsx personalizado, pegarlo en src/auth/pages/register/RegisterPage.tsx, export const RegisterPage =() => {} y personalizar el resto del código.
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67134603-diseno-panel-administrativo
 
+El diseño del panel administrativo está diseñado con bodt y el repositorio del código esta en: https://github.com/Klerith/bolt-admin-dashboard
 
+- Desde nuestra cuenta de GitHub, hacer un fork de https://github.com/Klerith/bolt-admin-dashboard,
+- Editar el fork en nuestro usuario de GitHub, con la tecla punto (.), dentro de GitHub se abre un VSC con el proyecto.
 
+AdminLayout.tsx:
+- Editar src/app.tsx, copiar solo la parte del return que corresponderá a nuestro admin/layout (desde la primera etiqueta <div hasta la primera etiqueta <main>) y pegarlo en el render de src/admin/layouts/AdminLayuout.tsx,
+- cerrar las etiquetas que quedan abiertas en nuestro AdminLayout.tsx,
+- copiar la línea de código del useState sidebarCollapsed y pegarla en nuestro comp AdminLayout
+
+- Desde el fork descargar la carpeta src/components con todos los componentes y guardarla en la carpeta src/admin/ de nuestro proyecto,
+- renombrar el componente Header.tsx a AdminHeader.tsx y Sidebar.tsx por AdminSidebar.tsx. Ajustar el código de los dos componentes
+
+- Desde nuestro AdminLayout.tsx importar el AdminHeader y el AdminSidebar,
+- AdminLayout.tsx en el <main> poner el <Outlet />, donde se mostraran nuestras páginas de dashboard, products y product
+
+DashboardPage.tsx:
+- Desde el fork, editar src/app.tsx, copiar las data ficticia stats, chartData, performanceData y pegarla antesd de nuestro comp DashboardPage.tsx,
+- Desde el app.tsx del fork, copiar todo el contenido entre las etiquetas html <main>..</main> y pegarlo dentro de un fragmento del render de nuestro DashboardPage.tsx,
+- agregar todas las importaciones necesarias.
+
+- Crear comp reutilizable para el título de las páginas del dashboard (Panel Administrativo) en, src/admin/components/AdminTitle.tsx,
+- cortar el <div>..</div> de /*Welcome Section*/ de nuestra DashboardPage.tsx y pegarlo en el render del comp AdminTitle.tsx
+ 
 
 
 
