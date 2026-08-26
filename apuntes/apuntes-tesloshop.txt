@@ -377,8 +377,29 @@ DashboardPage.tsx:
 
 - Crear comp reutilizable para el título de las páginas del dashboard (Panel Administrativo) en, src/admin/components/AdminTitle.tsx,
 - cortar el <div>..</div> de /*Welcome Section*/ de nuestra DashboardPage.tsx y pegarlo en el render del comp AdminTitle.tsx
- 
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67135448-navegacion-del-adminsidebar 
+
+AdminSidebar.tsx:
+
+🔷 useLocation
+
+El hook useLocation es una función incorporada en React Router (específicamente a partir de la versión 6) que sirve para obtener información sobre la URL actual en la que se encuentra el usuario dentro de una aplicación de una sola página (SPA).
+Cada vez que cambia la ruta de la aplicación, este hook devuelve un objeto location actualizado que representa la ruta actual.
+Propiedades del obj. location:
+- pathname: (String) La ruta de la URL actual (por ejemplo, /productos o /contacto).
+- search: (String) Los parámetros de consulta (query string) que van después del signo de interrogación (por ejemplo, ?id=5&sort=asc).
+- hash: (String) El fragmento de la URL que empieza con # (por ejemplo, #seccion-2).
+- state: (Any) Datos adicionales que se hayan pasado de forma oculta al navegar a través de la función navigate o del componente <Link>.
+- key: (String) Un identificador único para esta ubicación específica.
+
+-----
+
+- En el arreglo menuItems[]: Eliminar la prop active:true. Modificar los nombres de las label. Agregar las rutas con to: '/admin' y '/products',
+- en la sección /*Navigation*/, cambiar el <a href por un <Link to={ item.to || '/admin'}, requiere (import react-router).
+- Declarar el hook (R-R) useLocation, que retorna un obj. con la prop path, que contiene la url actual (string tipo '/admin/products'.
+- Crear una func helper (isActiveRotue) que recibe un path y lo compara con la ruta actual obtenida con useLocation,
+- En el <Link de /*Navigation*/, condicionar el estilo final (className) a lo devuelto por isActiveRoute
 
 
 

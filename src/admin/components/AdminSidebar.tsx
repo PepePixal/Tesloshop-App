@@ -1,3 +1,4 @@
+import { Link, useLocation } from 'react-router';
 import React from 'react';
 import { 
   Home, 
@@ -19,21 +20,38 @@ interface SidebarProps {
 }
 
 export const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
+  
   const menuItems = [
-    { icon: Home, label: 'Dashboard', active: true },
-    { icon: BarChart3, label: 'Analytics' },
-    { icon: Users, label: 'Users' },
-    { icon: ShoppingCart, label: 'Orders' },
-    { icon: FileText, label: 'Reports' },
-    { icon: Bell, label: 'Notifications' },
-    { icon: Settings, label: 'Settings' },
-    { icon: HelpCircle, label: 'Help' },
+    { icon: Home, label: 'Dashboard', to: '/admin' },
+    { icon: BarChart3, label: 'Productos', to: '/admin/products'},
+    { icon: Users, label: 'Usuarios' },
+    { icon: ShoppingCart, label: 'Ordenes' },
+    { icon: FileText, label: 'Reportes' },
+    { icon: Bell, label: 'Notificaciones' },
+    { icon: Settings, label: 'Ajustes' },
+    { icon: HelpCircle, label: 'Ayuda' },
   ];
+  
+  
+  // hook (r-r) devuelve obj. location con info de la url actual,
+  // la prop pathname del obj., contiene la ruta de la url actual (string tipo /admin/procducs)
+  const { pathname } = useLocation()
+  //console.log( pathname );
+
+  // recibe una url en to y la compara con la url activa pathname y
+  // retorna true o false.
+  // Para aplicar un estilo activo, a la opción pulsada del sidebar
+  const isActiveRoute = ( to: string ) => {
+    // TODO: ajustarlo para cuando estemos en la pantalla de pruducto
+
+    return pathname === to; // retorna true o false a isActiveRoute
+  }
 
   return (
     <div className={`bg-white border-r border-gray-200 transition-all duration-300 ease-in-out ${
       isCollapsed ? 'w-18' : 'w-60'
     } flex flex-col`}>
+
       {/* Header */}
       <div className="p-4 border-b border-gray-200 flex items-center justify-between h-18">
         {!isCollapsed && (
@@ -54,19 +72,21 @@ export const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) 
             const Icon = item.icon;
             return (
               <li key={index}>
-                <a
-                  href="#"
+                <Link to={ item.to || '/admin'}
                   className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 group ${
-                    item.active
+                    // llama a func. isActiveRotue enviando el path o uno inexistente '/xxx' que dará false
+                    isActiveRoute(item.to || '/xxx')
+                      // si isActiveRoute retorna true
                       ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
+                      // de lo contrario (false)
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                   }`}
                 >
-                  <Icon size={20} className="flex-shrink-0" />
+                  <Icon size={20} className="shrink-0" />
                   {!isCollapsed && (
                     <span className="font-medium">{item.label}</span>
                   )}
-                </a>
+                </Link>
               </li>
             );
           })}
@@ -87,6 +107,7 @@ export const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) 
           </div>
         </div>
       )}
+
     </div>
   );
 };
