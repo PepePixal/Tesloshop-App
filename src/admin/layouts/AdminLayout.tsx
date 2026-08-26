@@ -20,6 +20,7 @@ export const AdminLayout = () => {
           <AdminHeader />
           
           <main className="flex-1 p-6">
+            {/* Renderiza los children de /admin, según el app.route.tsx */}
             <Outlet />
           </main>
         </div>

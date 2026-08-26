@@ -42,7 +42,11 @@ export const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) 
   // retorna true o false.
   // Para aplicar un estilo activo, a la opción pulsada del sidebar
   const isActiveRoute = ( to: string ) => {
-    // TODO: ajustarlo para cuando estemos en la pantalla de pruducto
+    // si la ruta actual incluye '/admin/products/' y la ruta recibida en to es = '/admin/products'
+    // retorna true y sale de la func., para que el botón Productos se muestre con el estilo activado 
+    if( pathname.includes('/admin/products/') && to === '/admin/products') {
+      return true;
+    }
 
     return pathname === to; // retorna true o false a isActiveRoute
   }

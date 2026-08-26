@@ -401,6 +401,28 @@ Propiedades del obj. location:
 - Crear una func helper (isActiveRotue) que recibe un path y lo compara con la ruta actual obtenida con useLocation,
 - En el <Link de /*Navigation*/, condicionar el estilo final (className) a lo devuelto por isActiveRoute
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67135634-diseno-productspage
+
+🔷 https://ui.shadcn.com/docs/components/base/table
+
+src/admin/pages/products/AdminProductsPage.tsx
+
+- Agregar al render, el comp <AdminiTitle enviando title y subtitle
+- Importar el comp table de shadcn con: npx shadcn@latest add table,
+- copiar el código de la tabla desde https://ui.shadcn.com/docs/components/base/table e importar todos los comps necesarios, from "@/components/ui/table"
+- Personalizar los nombres de la tabla y los elementos temporalmente en crudo.
+- Agregar el comp <CustomPagination.../> al final del render.
+- Agregar junto al <AdminTitle /> un <Link con un <Button,  para agregar productos
+
+src/admin/components/AdminSidebar.tsx
+
+- En la func isActiveRoute agregar la condición que retorne true a isActiveRoute, para marcar activo el botón, siempre que estemos en una ruta que contenga '/admin/products/'
+
+
+
+
+
+
 
 
 
