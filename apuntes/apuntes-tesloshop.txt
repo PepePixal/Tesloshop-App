@@ -418,6 +418,175 @@ src/admin/components/AdminSidebar.tsx
 
 - En la func isActiveRoute agregar la condición que retorne true a isActiveRoute, para marcar activo el botón, siempre que estemos en una ruta que contenga '/admin/products/'
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67136054-diseno-productpage
+
+El diseño de la página de producto esta en: https://gist.github.com/Klerith/15c09dd610d17b9548de24a01056f828
+
+src/admin/pages/product/AdminProductPage.txs
+
+- eliminar el código que tengamos en AdminProductPage.tsx
+- copiar el código de https://gist.github.com/Klerith/15c09dd610d17b9548de24a01056f828 y pegarlo en AdminProductPage.tsx
+- revisar el nombre del componente AdminProdutPage
+
+
+----------------------------------------------------------------
+✅ Sección 19 - Productos y Backend
+----------------------------------------------------------------
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67230874-introduccion
+
+- Postgres
+- Docker
+- TanStack
+- QueryParams
+- QueryKeys
+- Paginación
+- Transformaciones de argumentos
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67230877-continuacion-de-proyecto
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67231177-teslo-backend-docker-images
+
+✅ Preparar Backend:
+
+- repo https://github.com/Klerith/nest-teslo-shop/tree/complete-backend-paginated-filters (material adjunto)
+- asegurar que estamos en la rama: complete-backend-paginated-filters
+- descargar el repo: <> Code / Download ZIP , en un directorio independiente de /teslo-shop
+- renombrar la carpeta del backend a: /backend-teslo-shop
+- VSC: abrir el repo de backend descargado, copiar y renombrar el archivo ".env.template" a ".env" ,
+- terminal VSC en el proyecto backend y ejecutar: npm i (instalar dependencias del proyecto)
+
+✅ Desplegar postgres y la base de datos en Docker:
+
+🔷 Postgres
+
+PostgreSQL (comúnmente llamado Postgres) es uno de los sistemas de gestión de bases de datos relacionales (RDBMS) más potentes, populares y avanzados del mundo.
+En una arquitectura web tradicional (una aplicación construida con Node.js, Python/Django, PHP/Laravel, etc):
+- El usuario interactúa con el Frontend (React, Vue, HTML).
+- El Frontend hace peticiones al Backend (el servidor).
+- El Backend procesa la lógica y se comunica con PostgreSQL para guardar o buscar los datos necesarios.
+- Postgres devuelve los datos al Backend, y este los muestra al usuario.
+
+-----
+
+🔷 Docker
+
+Docker es una herramienta de código abierto que se utiliza para crear, desplegar y ejecutar aplicaciones utilizando contenedores.
+Docker permite empaquetar una aplicación junto con todo lo que necesita para funcionar (código, librerías, sistema operativo base, dependencias y archivos de configuración) en un único paquete estandarizado llamado contenedor.
+
+Conceptos clave en Docker:
+
+- Dockerfile: Es un archivo de texto plano que contiene las instrucciones paso a paso sobre cómo construir tu aplicación y qué dependencias instalar. Es la "receta".
+- Imagen (Image): Es el resultado de leer el Dockerfile. Es una plantilla estática de solo lectura que contiene la aplicación y su entorno listo para ser ejecutado.
+- Contenedor (Container): Es una instancia en ejecución de una imagen. Puedes pensar en la imagen como un plano de una casa y en el contenedor como la casa ya construida en la que puedes entrar y vivir.
+
+Ejemplo práctico de uso:
+Imagina que estás desarrollando una aplicación web en Node.js con una base de datos PostgreSQL:
+- En lugar de instalar Node.js y PostgreSQL manualmente en tu ordenador (lo que puede ensuciar tu sistema), creas un archivo Dockerfile para tu app y descargas la imagen oficial de PostgreSQL.
+- Con un solo comando (docker compose up), Docker levanta ambos servicios conectados entre sí en segundos.
+- Cuando terminas de trabajar, puedes apagar y borrar los contenedores sin dejar rastro de instalaciones innecesarias en tu equipo.
+
+-----
+
+✔ Docker-desktop: descargar o arrancar docker-desktop.
+- Abrir consola y comprobar que también tenemos docker en la consola: docker --version
+
+- VSC: En el archivo docker-compose.yaml está la configuración para levantar la base de datos (teslodb) con postgres, en un contenedor de docker. La información de la BD se grabará en la carpeta ./postgres del proyecto ( volumes: - ./postgres:/var/lib/postgresql/data)
+
+Para levantar la BD con postgres en un contenedor de docker, siguiendo la configuración del archivo docker-compse.yaml:
+- Abrir en un terminal en el proyecto del backend y ejecutar el comando: docker compose up -d
+Esto descarga la imagen oficial del gestor de base de datos "Postgres" en docker, levanta postgres en un contenedor y configura el acceso a la base de datos, siguiendo la información del archivo docker-compose.yaml con las variables de entorno.
+
+- Docker: en nuestro docker-desktop ahora deberíamos tener: Container: backend-teslo-shop y en Images: postgres 14.3
+- pulsar sobre el símbolo " > " a la izquierda del nombre del contendor, para ver la info de la configuración.
+
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67231635-levantar-backend-y-ejecutar-semilla
+
+✅ Levantar el servidor de backend (con la BD en docker):
+
+- Docker: Comprobar que el contenedor backend-teslo-shop está en play (en Actions estará el símbolo para stop).
+
+- Abrir terminal en el directorio del backend (/backend-teslo-shop) ejecutar: npm run start:dev (ejecuta el scritp del package.json). Al final debería mostrar: App running on port 3000. Nuestro backend está corriendo en el puerto 3000.
+
+- Postman: Probar el acceso a la BD, al endpoint: localhost:3000/api/seed
+  - nos debería dar repuesta: 200 OK y SEED EXECUTED (seed (semilla) destruye y reconstruye la base de datos)
+  - probar el endpoint: localhost:3000/api/products (debería mostrar los productos)
+  - probar el endpoint con query parameter q : localhost:3000/api/products?q=raven (productos con "raven" en el title)
+
+- Para ver documentación de como funciona el backend, en un navegador poner: localhost:3000/api
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67231906-tanstack-query-devtools-y-axios
+
+🔷 TANSTACK QUERY
+
+TanStack Query (anteriormente conocido como React Query) es una de las bibliotecas más populares para la gestión de estado asíncrono en desarrollo web.
+En términos sencillos, es una navaja suiza para obtener, almacenar en caché, sincronizar y actualizar datos del servidor en tus aplicaciones frontend.
+
+¿Para qué sirve?
+Su objetivo principal es simplificar la comunicación entre tu interfaz de usuario y tus APIs (REST, GraphQL, etc.), resolviendo problemas complejos que antes requerían mucho código manual. Entre sus funciones clave destacan:
+- Caché inteligente: Guarda las respuestas del servidor en memoria. Si el usuario navega a otra sección y regresa, los datos se muestran de inmediato sin hacer una nueva petición innecesaria.
+- Sincronización en segundo plano: Actualiza automáticamente los datos de la pantalla cuando el usuario vuelve a enfocar la ventana del navegador o recupera la conexión a internet.
+- Gestión de estados automatizada: Proporciona de forma nativa variables de estado como isLoading, isError, isFetching y data, evitando que tengas que crearlas manualmente con useState.
+- Mutaciones sencillas: Facilita el envío de datos al servidor (crear, actualizar o borrar) y se encarga de revalidar o actualizar la caché automáticamente tras la operación.
+- Paginación y Infinite Scroll: Incluye herramientas optimizadas para cargar datos por bloques o de manera infinita a medida que el usuario hace scroll.
+
+¿Por qué deberías usarlo?
+Tradicionalmente, para obtener datos se combinaban los hooks useEffect y useState, lo que derivaba en código repetitivo (boilerplate), posibles fugas de memoria y errores difíciles de depurar en los estados de carga.
+TanStack Query te permite separar el estado del servidor del estado global del cliente (como Redux o Zustand). Esto hace que tu código sea mucho más limpio, rápido y fácil de mantener.
+
+-----
+
+🔷 Axios
+
+Axios es una biblioteca de JavaScript extremadamente popular que funciona como un cliente HTTP. Su única y principal misión es realizar peticiones a un servidor (como peticiones GET, POST, PUT, DELETE) de forma sencilla, tanto desde el navegador como desde Node.js.
+
+Es, básicamente, una alternativa más avanzada y cómoda al fetch nativo del navegador.
+
+¿Para qué sirve Axios?
+
+- Hacer peticiones HTTP: Envía y recibe datos de una API de manera limpia usando Promesas (Promises).
+- Transformación automática: Convierte automáticamente los datos de respuesta a formato JSON (y viceversa al enviar).
+- Interceptores: Permite interceptar peticiones o respuestas antes de que sean manejadas por tu código. Es ideal para añadir tokens de autenticación automáticamente o manejar errores globales (como un error 401 de sesión caducada).
+- Manejo de errores mejorado: A diferencia de fetch (que no considera un error HTTP como un fallo de red), Axios rechaza la promesa automáticamente si recibe códigos de error como 404 o 500.
+- Cancelación de peticiones: Permite cancelar peticiones en curso si el usuario abandona una página o componente.
+
+La gran confusión: ¿Axios vs. TanStack Query?
+
+Muchos desarrolladores novatos se preguntan cuál elegir, pero la realidad es que no compiten entre sí; se complementan a la perfección.
+- Axios es el mensajero: Se encarga únicamente del transporte. Va a la API, trae los datos y te los entrega. No sabe nada de caché, ni de si el usuario cambió de pestaña, ni de reintentar la petición si falló el internet.
+- TanStack Query es el cerebro: Se encarga de la estrategia. Decide cuándo hay que ir a buscar los datos, dónde guardarlos en caché para no saturar el servidor, cuándo refrescarlos y cómo manejar los estados de carga.
+
+¿Cómo trabajan juntos?
+
+En un proyecto real, utilizas Axios dentro de TanStack Query. TanStack Query le dice "necesito estos datos" y utiliza a Axios para ir a buscarlos.
+
+JavaScript
+// Ejemplo usando ambos juntos
+const { data, isLoading, error } = useQuery({
+  queryKey: ['user'],
+  queryFn: async () => {
+    // Aquí usamos Axios para hacer la petición HTTP real
+    const response = await axios.get('https://api.example.com/user');
+    return response.data; // TanStack Query guarda esto en caché automáticamente
+  }
+});
+
+- Axios resuelve el cómo haces la petición.
+- TanStack Query resuelve el qué haces con esos datos en tu interfaz. 
+
+-----
+
+✅ Instalar las librerías TanStack Query y Axios, en el proyecto:
+
+https://tanstack.com/query/latest/docs/framework/react/installation
+
+- Terminal del proyecto: npm i @tanstack/react-query axios
+- Instalar las devtools de tanstack/react-query: npm i @tanstack/react-query-devtools
+- podemos comprobar si se han instalado con el comando: npm list
+
+- Configurar <QueryClientProvider y <ReactQueryDevtools en nuestro archivo TesloShopApp.tsx
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67232152-variables-de-entorno-y-axios-api
 
 
 

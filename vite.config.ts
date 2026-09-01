@@ -8,7 +8,11 @@ export default defineConfig({
   plugins: [react({disableOxcRecommendation: true}), tailwindcss()],
   resolve: {
 		alias: {
-			"@": path.resolve(__dirname, "./src"),
+
+			// "@": path.resolve(__dirname, "./src"),
+			
+			// Reemplazamos __dirname por import.meta.dirname
+            "@": path.resolve(import.meta.dirname, "./src"),
 		},
 	},
 })
