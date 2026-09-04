@@ -588,6 +588,62 @@ https://tanstack.com/query/latest/docs/framework/react/installation
 
 🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67232152-variables-de-entorno-y-axios-api
 
+- Crear archivo .env, con variable de entorno VITE_API_URL=http://localhost:3000/api
+- Crear directorio y archivo src/api/tesloApi.ts y crear la instancia de axios.
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67232297-accion-getproductsaction
+
+- Crear directorio y archivo: src/shop/actions/get-products.ation.ts y definir la petición http.
+
+- Crear directorio para los tipos de datos src/interfaces/ y archivo products.response.ts para la estructura de datos recibidos de la petición http a productos.
+Para crear la estructura de datos:
+- Postman: petición GET a localhost:3000/api/products, debería dar 200 ok,
+  - copiar el JSON del Body, de la respuesta a la petición
+- VSC: Editar el archivo vacío products.response.ts, 
+  - paleta de comandos (Ctrl+Shift+P) y "Paste JSON as Code", name: ProductsResponse + Enter.
+De esta forma tenemos una copia de la estructura de datos, falta ajustarlos a nuestra necesidad.
+- Crear archivo src/interfaces/product.interface.ts, cortar y pegar el interface de Product.
+- Crear archivo src/interfaces/user.interface.ts, cortar y pegar el interface de User
+
+Ahora ya podemos tipar la respuesta del get de shop/actions/get-rpoducts.action.ts, con el tipo <ProductsResponse>
+
+- Crear directorio src/shop/hooks y el custom hook useProducts.ts,
+para obtener los productos de la BD usando el hook useQuery() de tanstack, desde donde llamaremos a nuestra función getProductsAction().
+
+- Usar nuestro custom hook useProducts() en el comp. /shop/pages/home/HomePage, para que haga la petición http desde ahí.
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67232419-mostrar-productos-en-pantalla
+
+Mostrar en pantalla los productos obtenidos de backend.
+
+La prop "images:" de cada product, contiene solo el nombre de la imagen o imágenes del producto, tipo "1549275-00-A_0_2000.jpg".
+Los archivos con las imágenes de los productos se obtienen del endpoint localhost:3000/api/files/product/
+- Postman: probar petición Get a: localhost:3000/api/files/product/1549275-00-A_0_2000.jpg
+
+- Definir función productsWithImageUrl, que genera un nuevo arreglo de products, con la url de cada imagen en la prop [] images.
+
+- Con la utilidad de Tanstack Query, buscar los products obtenidos con la consulta, copiar una de las urls de la prop images y probarla con un GET en Postmant o en el navegador.
+
+- Cambiar código de HomePage.tsx para usar la data obtenida de la API, en lugar de los products.mock.
+
+- Cambiar el código en ProductsGrid.tsx, para mostrar la info de los productos que  ahora viene en la data de la consulta a la api.
+
+- Modificar código de ProductCard.tsx
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67232720-aplicar-paginacion
+
+src/shop/actions/get-products.action.ts: 
+- Agregar interface Options, con las opciones (limit y offset) que puede recibir getProductsAction para hacer la petición http paginada
+- destructurar las opciones recibidas en options
+- agregar params, a la petición get
+
+src/shop/hooks/useProducts.tsx:
+- declarar hook de react-router useSearchParams()
+- obtener el param 'limit' de searchParams, si no viene, asigna 9
+- obtener el param 'page' de searchParams, si no viene, asigna 0
+- a getProductsAction() enviarle la prop limit y la prop offset.
+- El offset es la cantidad inicial de products que tiene que saltar, según la page a mostrar. Calcular el offset, según la página solicitada y el límite de productos por página.
+
 
 
 
