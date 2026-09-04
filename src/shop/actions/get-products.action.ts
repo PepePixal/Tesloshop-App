@@ -9,24 +9,28 @@ import type { ProductsResponse } from "@/interfaces/products.response";
 // opciones (? opcionales) que puede recibir getProductsAction 
 // para petición http, por paginación
 interface Options {
-    limit?: number | string;    //products por página
-    offset?: number | string;   //products iniciales que se omiten
+    limit?: number | string;    //cant. products por página
+    offset?: number | string;   //catnt. products iniciales que se omiten
+    sizes?: string;
+    gender?: string;
 }
 
 // furc. retorna Promise con data tipo <ProductsResponse>
 export const getProductsAction = async( options: Options ):Promise<ProductsResponse> => {
 
     //destruct de las options recibidas
-    const { limit, offset } = options;
+    const { limit, offset, gender, sizes } = options;
 
     // petición http get con nuestra instancia de Axios tesloApi,
-    // enviando url y params
+    // enviando url y params,
     // la respuesta (data) debe ser tipo <ProductsResponse>,
     // destruc solo la prop data, de toda la respuesta
     const { data } = await tesloApi.get<ProductsResponse>('/products', {
         params: {
             limit,
             offset,
+            gender,
+            sizes,
         }
     });
     //console.log(data);

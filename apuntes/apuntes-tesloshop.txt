@@ -453,7 +453,7 @@ src/admin/pages/product/AdminProductPage.txs
 - descargar el repo: <> Code / Download ZIP , en un directorio independiente de /teslo-shop
 - renombrar la carpeta del backend a: /backend-teslo-shop
 - VSC: abrir el repo de backend descargado, copiar y renombrar el archivo ".env.template" a ".env" ,
-- terminal VSC en el proyecto backend y ejecutar: npm i (instalar dependencias del proyecto)
+- terminal VSC en el proyecto backend y ejecutar: npm i (instalar dependencias del proyecto backend)
 
 ✅ Desplegar postgres y la base de datos en Docker:
 
@@ -490,7 +490,8 @@ Imagina que estás desarrollando una aplicación web en Node.js con una base de 
 ✔ Docker-desktop: descargar o arrancar docker-desktop.
 - Abrir consola y comprobar que también tenemos docker en la consola: docker --version
 
-- VSC: En el archivo docker-compose.yaml está la configuración para levantar la base de datos (teslodb) con postgres, en un contenedor de docker. La información de la BD se grabará en la carpeta ./postgres del proyecto ( volumes: - ./postgres:/var/lib/postgresql/data)
+- VSC: En el archivo docker-compose.yaml está la configuración para levantar la base de datos (teslodb) con postgres, en un contenedor de docker.
+La información de la BD se grabará en la carpeta ./postgres del proyecto ( volumes: - ./postgres:/var/lib/postgresql/data)
 
 Para levantar la BD con postgres en un contenedor de docker, siguiendo la configuración del archivo docker-compse.yaml:
 - Abrir en un terminal en el proyecto del backend y ejecutar el comando: docker compose up -d
@@ -641,8 +642,45 @@ src/shop/hooks/useProducts.tsx:
 - declarar hook de react-router useSearchParams()
 - obtener el param 'limit' de searchParams, si no viene, asigna 9
 - obtener el param 'page' de searchParams, si no viene, asigna 0
-- a getProductsAction() enviarle la prop limit y la prop offset.
+- a getProductsAction() enviarle las props limit y offset, validando que sean tipo number.
 - El offset es la cantidad inicial de products que tiene que saltar, según la page a mostrar. Calcular el offset, según la página solicitada y el límite de productos por página.
+- Agregar offset y limit a la prop queryKey de useQuery, para que tanstack haga la petición cada vez que cambie el valor de offset (page) y o limit, a demás de 'products'.
+- Agregar la prop staleTime, para que tanstack mantenga en caché un tiempo (5 min) el resultado de la última petición y no volver a hacerla.
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67232828-filtros-por-genero-y-tallas
+
+✅ Filtros por género:
+
+Los géneros los manejados en la aplicación con parámetros de ruta.
+
+shop/hooks/useProudcts.tsx
+- declarar el hook (react-router) useParams, que retorna los parámetros de ruta, de la url actual y obtener el valor de gender
+- agregar la prop 'gender' a la prop queryKey del hook de Tanstack useQuery
+- agregar la prop 'gender' al objeto enviado como argumento con getProductsAction()
+ 
+shop/actions/get-products.action.ts
+- agregar la prop gender como opcional string, al interface Options
+- destruct gender del parámetro options, recibido en getProductsAction()
+- agregar la prop gender a los params enviados en la petición tesloApi.get
+
+✅ Filtros por tallas:
+
+Las tallas y los precios los manejamos con use search params o parámetros de búsqueda:
+shop/hooks/useProudcts.tsx
+- tenemos declarado el hook (react-router) useSearchParams(), que retorna los (?) search params, de al url actual
+- obtener, con .get, las 'sizes' del arreglo searchParams, retornado por el hook useSearchParams(). Si no retorna sizes, asigna undefined.
+- agregar la prop 'sizes' a la prop queryKey, del hook de Tanstack useQuery
+- agregar la prop 'sizes' al objeto enviado como argumento con getProductsAction()
+
+shop/actions/get-products.action.ts
+- agregar la prop sizes como opcional string, al interface Options
+- destruct sizes del parámetro options, recibido en getProductsAction()
+- agregar la prop sizes a los params enviados en la petición tesloApi.get
+
+🚨 Ajustar paginación por género: src/shop/pages/gender/GenderPage.tsx
+  - sustituir el totalPages en crudo por: <CustomPagination totalPages={ data?.pages || 1} />
+
+
 
 
 
