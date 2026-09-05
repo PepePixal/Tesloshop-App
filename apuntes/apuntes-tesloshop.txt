@@ -680,7 +680,31 @@ shop/actions/get-products.action.ts
 🚨 Ajustar paginación por género: src/shop/pages/gender/GenderPage.tsx
   - sustituir el totalPages en crudo por: <CustomPagination totalPages={ data?.pages || 1} />
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67233009-filtrar-por-rango-de-precios
 
+✅ Filtros por rango de precios:
+
+Cada producto de la BD tiene uan prop 'price' con el precio, pero nuestro filtro por precio, envía un query param a la url, tipo string con un rango (price=100-200).
+El endpoint de la API del backend, nos permite enviar los query params 'maxPrice' y/o 'minPrice', en la petición http get.
+Tendremos que hacer una convención entre lo que obtenemos de la url y lo que podemos enviar en la petición http get, para obtener los products filtrados por el rango de precios.
+
+src/shop/hooks/useProducts.tsx
+- obtener (.get) el query param 'price', del arrelgo searchParams, si no viene nada, asignar 'any' (valor por defecto)
+- declarar las vars minPrice y maxPrice, como undefined,
+- definir un switch que según el rango de valor de 'price', asigna un minPrice y un maxPrice
+- agregar las props 'maxPrice' y 'minPrice' a la prop queryKey, del hook de Tanstack useQuery
+- agregar las props 'maxPrice' y 'minPrice' al objeto enviado como argumento con getProductsAction()
+
+shop/actions/get-products.action.ts
+- agregar las props minPrice y maxPrice como opcional number, al interface Options
+- destruct minPrice y maxPrice del parámetro options, recibido en getProductsAction()
+- agregar las props minPrice y maxPrice a los params enviados en la petición tesloApi.get
+
+/*
+ Otra forma de asignar valores a 'minPrice' y 'maxPrice', según el valor de 'price'. (en lugar de usar un switch):
+   const limitPrice = searchParams.get('price') || 'any';
+   const [minPrice, maxPrice] = limitPrice === 'any' ? [undefined, undefined] : limitPrice.split('-');
+*/
 
 
 

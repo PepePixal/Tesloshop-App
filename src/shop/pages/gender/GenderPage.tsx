@@ -10,6 +10,8 @@ export const GenderPage = () => {
   // retorna los parámetros dinámicos de la url y destruc el param gender
   const { gender } = useParams();
 
+  // llama nuestro custom hook, que usa Tanstack React Query
+  // para obtener la data
   const { data } = useProducts();
 
   // define genderLabel, cuyo valor depende del valor de gender (se puede hacer con un case)

@@ -13,13 +13,15 @@ interface Options {
     offset?: number | string;   //catnt. products iniciales que se omiten
     sizes?: string;
     gender?: string;
+    maxPrice?: number;
+    minPrice?: number;
 }
 
 // furc. retorna Promise con data tipo <ProductsResponse>
 export const getProductsAction = async( options: Options ):Promise<ProductsResponse> => {
 
     //destruct de las options recibidas
-    const { limit, offset, gender, sizes } = options;
+    const { limit, offset, gender, sizes, maxPrice, minPrice } = options;
 
     // petición http get con nuestra instancia de Axios tesloApi,
     // enviando url y params,
@@ -31,6 +33,8 @@ export const getProductsAction = async( options: Options ):Promise<ProductsRespo
             offset,
             gender,
             sizes,
+            maxPrice,
+            minPrice
         }
     });
     //console.log(data);
