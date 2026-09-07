@@ -15,13 +15,14 @@ interface Options {
     gender?: string;
     maxPrice?: number;
     minPrice?: number;
+    query?: string;
 }
 
 // furc. retorna Promise con data tipo <ProductsResponse>
 export const getProductsAction = async( options: Options ):Promise<ProductsResponse> => {
 
     //destruct de las options recibidas
-    const { limit, offset, gender, sizes, maxPrice, minPrice } = options;
+    const { limit, offset, gender, sizes, maxPrice, minPrice, query } = options;
 
     // petición http get con nuestra instancia de Axios tesloApi,
     // enviando url y params,
@@ -34,7 +35,8 @@ export const getProductsAction = async( options: Options ):Promise<ProductsRespo
             gender,
             sizes,
             maxPrice,
-            minPrice
+            minPrice,
+            q: query,   // la api permite q como key válida para enviar como parámetro en la petición http
         }
     });
     //console.log(data);

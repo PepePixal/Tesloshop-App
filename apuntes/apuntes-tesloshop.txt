@@ -706,6 +706,30 @@ shop/actions/get-products.action.ts
    const [minPrice, maxPrice] = limitPrice === 'any' ? [undefined, undefined] : limitPrice.split('-');
 */
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67233146-filtrar-por-nombre-de-producto
+
+Cuando buscamos una palabra con el buscador, nuestro código agrega a al URL un query param cuya llave es 'query'.
+
+La API del backend, nos permite enviar el param con (key) q y (value) la palabra buscada, para retornarnos todos los productos que contenga la palabra buscada, en su prop 'title'.
+Probar GET con Postman a: localhost:3000/api/products?q=Jacket
+
+✅ Filtro para el buscador de palabras incluidas en la descripción del productos
+
+src/shop/hooks/useProducts.tsx
+- obtener (.get) el query param 'query', del arrelgo searchParams, si no viene nada, asignar undefined,
+- agregar la prop 'query' a la prop queryKey, del hook de Tanstack useQuery
+- agregar la prop 'query' al objeto enviado como argumento en getProductsAction()
+
+shop/actions/get-products.action.ts
+- agregar la prop 'query' como opcional y string, al interface Options
+- destruct 'query' del parámetro options, recibido en getProductsAction()
+- agregar la prop q ,como está en el backend, pero con el valor de query ( q: query ), a los params enviados en la petición tesloApi.get
+
+🚨Cuando se envía una búsqueda, se resetean todos los query params de la URL activa, para poder aplicar nuevos filtros a los productos encontrados. Pero no se resetea el param de ruta, que usamos para las rutas por genero (gender/men, women, kid)
+
+
+
+
 
 
 

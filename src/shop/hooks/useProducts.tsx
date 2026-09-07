@@ -10,12 +10,13 @@ import { getProductsAction } from "../actions/get-products.action";
 // custom hook
 export const useProducts = () => {
 
-  // obtiene el parmametro de ruta gender, de la URL actual
+  // retorna objeto (clave-valor) con el :segmento de la ruta gender, de la URL actual
   const  { gender } = useParams();
   
-  // obtiene todos los search o query params, de la URL actual
+  // retorna [] con todos los search o query params, de la URL actual
   const [ searchParams ] = useSearchParams();
-  // obtiene los params limit, page y sizes de searchParams
+  // obtiene los params concretos, de searchParams, de la URL activa
+  const query = searchParams.get('query') || undefined;
   const limit = searchParams.get('limit') || 9;
   const page = searchParams.get('page') || 1;
   const sizes = searchParams.get('sizes') || undefined;
@@ -25,10 +26,10 @@ export const useProducts = () => {
   const offset = (Number(page) - 1) * Number(limit)
 
   //** Par obtener productus filtrados por rango de precios.**//
-  // Sabemos que la api nos permite enviar los params minPrice y maxPrice.
   // Obtiene el valor del search param 'price' o asinga 'any'
   const price = searchParams.get('price') || 'any';
-  //define variables
+  // Sabemos que la api nos permite enviar los params minPrice y maxPrice.
+  // Define variables
   let minPrice = undefined;
   let maxPrice = undefined;
   // según el valor de price, asigna valores a min y maxPrice
@@ -58,9 +59,10 @@ export const useProducts = () => {
     const [minPrice, maxPrice] = limitPrice === 'any' ? [undefined, undefined] : limitPrice.split('-');
   */
 
+
   // hook de Tanstack React Query
   return useQuery({
-    queryKey: ['products', { offset, limit, gender, sizes, minPrice, maxPrice }],
+    queryKey: ['products', { offset, limit, gender, sizes, minPrice, maxPrice, query }],
     // llama nuestra func. enviando props
     queryFn: () => getProductsAction({
       // valida por si limit y offset no son tipo number
@@ -70,6 +72,7 @@ export const useProducts = () => {
       sizes: sizes,   // se puede poner solo: sizes, 
       minPrice,       // es lo mismo que:  minPrice: minPrice,
       maxPrice,       // es lo mismo que:  maxPrice: maxPrice
+      query,
     }),
     //matener en caché el último resultado de la petición http.
     staleTime: 1000 * 60 * 5, //5 min en caché
