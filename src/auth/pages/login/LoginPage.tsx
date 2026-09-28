@@ -8,11 +8,37 @@ import { Label } from "@/components/ui/label"
 import { CustomLogo } from "@/components/custom/CustomLogo"
 
 export const LoginPage = () => {
+
+  // manejador del evento de envio (submit) del formulario del login de usuario.
+  // Recibe param event, con un tipado que indica que viene de una etiqueta <form>, en el DOM.
+  const handleLogin = async( event: React.SubmitEvent<HTMLFormElement>) => {
+    // evita la acción por defecto del navegador al enviar un formualrio,
+    // para poder manejar el envio con JavaScript sin perder el estado actual.
+    event.preventDefault();
+
+    // Crea el objeto formData, instanciando la clase nativa de JavaScript FormData,
+    // que obtiene automáticamente los valores de todos los campos de entrada (input, select, etc.)
+    // que tengan el atributo name dentro del formulario.
+    // event.target es el elemento del DOM que dispara el evento, el formulario en sí mismo,
+    // del que FormData recopilará los valores.
+    const formData = new FormData( event.target as HTMLFormElement);
+
+    // obtiene el valor de email y password del objeto formData
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    //console.log( {email, password} );
+
+    
+
+
+  };
+
+
   return (
     <div className={"flex flex-col gap-6"}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form className="p-6 md:p-8" onSubmit={ handleLogin }>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <CustomLogo />
@@ -20,7 +46,13 @@ export const LoginPage = () => {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Correo</Label>
-                <Input id="email" type="email" placeholder="mail@example.com" required />
+                <Input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="mail@example.com"
+                  required
+                />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
@@ -29,7 +61,13 @@ export const LoginPage = () => {
                     ¿Olvidaste tu contraseña?
                   </a>
                 </div>
-                <Input id="password" type="password" required placeholder="Contraseña" />
+                <Input
+                  id="password"
+                  type="password"
+                  name="password"
+                  placeholder="Contraseña"
+                  required
+                />
               </div>
               <Button type="submit" className="w-full">
                 Ingresar

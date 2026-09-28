@@ -432,6 +432,7 @@ src/admin/pages/product/AdminProductPage.txs
 ----------------------------------------------------------------
 ✅ Sección 19 - Productos y Backend
 ----------------------------------------------------------------
+
 🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67230874-introduccion
 
 - Postgres
@@ -710,13 +711,13 @@ shop/actions/get-products.action.ts
 
 Cuando buscamos una palabra con el buscador, nuestro código agrega a al URL un query param cuya llave es 'query'.
 
-La API del backend, nos permite enviar el param con (key) q y (value) la palabra buscada, para retornarnos todos los productos que contenga la palabra buscada, en su prop 'title'.
+La API del backend, nos permite enviarle el param 'q' (key) y la palabra buscada (value), para retornarnos todos los productos que contenga la palabra buscada, en su prop 'title'.
 Probar GET con Postman a: localhost:3000/api/products?q=Jacket
 
 ✅ Filtro para el buscador de palabras incluidas en la descripción del productos
 
 src/shop/hooks/useProducts.tsx
-- obtener (.get) el query param 'query', del arrelgo searchParams, si no viene nada, asignar undefined,
+- obtener (.get) el query param 'query', del arreglo searchParams, si no viene nada, asignar undefined,
 - agregar la prop 'query' a la prop queryKey, del hook de Tanstack useQuery
 - agregar la prop 'query' al objeto enviado como argumento en getProductsAction()
 
@@ -726,6 +727,138 @@ shop/actions/get-products.action.ts
 - agregar la prop q ,como está en el backend, pero con el valor de query ( q: query ), a los params enviados en la petición tesloApi.get
 
 🚨Cuando se envía una búsqueda, se resetean todos los query params de la URL activa, para poder aplicar nuevos filtros a los productos encontrados. Pero no se resetea el param de ruta, que usamos para las rutas por genero (gender/men, women, kid)
+
+----------------------------------------------------------------
+✅ Sección 20 - Auth (Autenticación y Autorización)
+----------------------------------------------------------------
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67233444-introduccion
+
+- TanStack con Zustand
+- Zustand como gestor de estado
+- Generalidades de los JWTs (JSON Web Tokens)
+- Mantener la sesión del usuario
+- Autenticación (JWTs)
+- Autorización
+- Protección de rutas
+- Autorización de rutas
+
+🔷 TanStack (recordatorio)
+
+TanStack Query (anteriormente conocido como React Query) es una de las bibliotecas más populares para la gestión de estado asíncrono en desarrollo web. Nos permite almacenar en caché, sincronizar y actualizar datos del servidor en tus aplicaciones frontend.
+
+🔷 Zustand
+
+En el desarrollo web con React, Zustand (que significa "estado" en alemán) es una biblioteca especializada en gestión de estado global, pequeña, rápida y moderna.
+
+Es una de las alternativas más populares a herramientas tradicionales como Redux o al context api de React, debido a su simplicidad y bajo consumo de recursos.
+
+Características Principales:
+- Sin Boilerplate (Código repetitivo): A diferencia de Redux, no necesitas configurar actions, reducers, dispatchers ni providers gigantescos. Su sintaxis es extremadamente limpia.
+- Basado en Ganchos (Hooks): Su API se integra de forma natural con React utilizando hooks personalizados.
+- Fuera del Árbol de Componentes: No requiere que envuelvas tu aplicación en un <Provider /> global (como Context API o Redux). El estado vive fuera de los componentes de React, lo que evita renderizados innecesarios.
+- Inmutable por debajo: Aunque actualices el estado de forma directa y sencilla, internamente maneja la inmutabilidad de manera transparente.
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67233471-continuacion-de-proyecto
+
+- Levantar Docker desktop, Backend (npm run start:dev) y frontend (npm run dev)
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67235799-explicacion-inicio-de-sesion-jwt
+
+🔷 JWT - JSON Web Tokens
+
+Se trata de un estándar abierto (RFC 7519) basado en JSON, que se utiliza para transmitir información de manera segura entre partes (normalmente el servidor y el cliente) como un objeto JSON. En una aplicación de React, los JWTs se utilizan principalmente para la autenticación y autorización de usuarios.
+
+¿Cómo funciona un JWT en React?
+
+- Inicio de sesión: El usuario introduce sus credenciales (correo y contraseña) en un formulario de React.
+- Autenticación en el servidor: React envía estos datos a la API (Node.js, Python, PHP, etc.). El servidor verifica que sean correctos.
+- Generación del token: Si son correctos, el servidor crea un JWT que contiene información cifrada (como el ID del usuario y su rol) y lo firma digitalmente con una clave secreta.
+- Almacenamiento en el cliente: El servidor devuelve el token a React. Tu aplicación de React lo guarda normalmente en el localStorage, sessionStorage o en una cookie segura.
+- Peticiones protegidas: Cada vez que el usuario quiere acceder a una ruta protegida o hacer una petición a una API que requiere estar logueado, React incluye este token en la cabecera (header) de la petición HTTP (usualmente bajo el nombre Authorization: Bearer <token>).
+- Validación: El servidor recibe la petición, comprueba que el token sea válido y otorga o deniega el acceso.
+
+Estructura de un JWT:
+
+Un token se ve como una cadena larga de texto separada por puntos (.) y consta de tres partes:
+
+- Header (Cabecera): Especifica el tipo de token (JWT) y el algoritmo de cifrado (ej. HS256).
+- Payload (Carga útil): Contiene los datos (claims) del usuario, como su ID, nombre, permisos y fecha de expiración.
+- Signature (Firma): Es el resultado de combinar la cabecera, el payload y una clave secreta del servidor. Sirve para garantizar que el token no ha sido alterado.
+
+Buenas prácticas en React:
+- Guardarlo en localStorage es muy común, pero vulnerable a ataques de tipo XSS si tu app tiene vulnerabilidades de inyección de código.
+- La opción más segura recomendada por expertos de seguridad es guardarlo en Cookies HTTP-only gestionadas por el servidor, ya que JavaScript no puede acceder a ellas directamente.
+
+Rutas Protegidas: En React (usando React Router), creas componentes de orden superior o wrappers para comprobar si el token existe antes de renderizar páginas privadas (como un panel de control).
+
+-----
+
+Tanto para loguearse como para crear una nueva cuenta de usuario, se hace con una petición POST a la api del backend (en el servidor), desde el formulario.
+
+Pruebas a la api con POSTMAN:
+- Petición POST a: localhost:3000/api/auth/login - Nos devolverá mensaje con los errores de validación.
+- Petición POST a: localhost:3000/api/auth/login - enviando en Body / raw / JSON /  
+							{
+								"email": "test1@google.com",
+   								"password": "Abc123" 
+							}
+Nos retornará un ok 201 Created, ya que el email y el password ay existen en la tabla de la bd.
+En la info retornada está el JSON web token temporal, generado por la api del backend, con el que podremos controlar la sesión del usuario.
+
+- Petición POST para registrar un nuevo usuario: localhost:3000/api/auth/register - enviando en Body / raw / JSON /  
+							{
+								"email": "pepe@google.com",
+   								"password": "Abc123",
+								"fullName": "Pepe Mari" 
+							}
+Nos retornará un ok 201 Created, con la info del nuevo usuario y un JSON web token temporal, generado por la api del backend, con el que podremos controlar la sesión del usuario.
+
+- Petición POST para comprobar el nuevo usurio: localhost:3000/api/auth/login - enviando en Body / raw / JSON /  
+							{
+								"email": "pepe@google.com",
+   								"password": "Abc123",
+							}
+Nos retornará un ok 201 Created, con la info del nuevo usuario y un NUEVO JSON web token temporal, generado por la api del backend,  con el que podremos controlar la sesión del usuario.
+
+En el sitio web JWT.io, podemos verificar el JSON web token, recibido. Aunque NO es aconsejable, aqui podemos probar también la llave o secret, con la que se genera el token.
+
+- Comprobar si un JSON web token, todavía es válido, con petición GET a: localhost:3000/api/auth/check-status - enviando el token en: Authorization / Bearer Token
+
+Si el token todavía es válido, retorna ok 200, la información del usuario y un nuevo "token" válido para 2 horas más.
+
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67236624-accion-inicio-de-sesion	
+
+Crear la acción para consultar a la api del backend, cuando se envían los datos del usuario que intenta loguearse a través del formulario.
+
+- Crear el action src/auth/actions/login.action.ts, con la lógica de código para enviar la petición http POST, con la instancia de Axios tesloApi, al endpoint de la API en el backend. Recibirá la respuesta en data y la retornara.
+- Crear la interface src/auth/interfaces/auth.response.ts, definir la interface AuthResponse, para tipar la data que recibiremos de la API, en lgoin.action.ts. El type User lo importaremos de '@/interfaces/user.interface'.
+Esta interface nos servirá para tipar tanto las respuestas de Login, Register y CheckStatus.
+- Tipar la respuesta que recibirá nuestra función loginAction, que será una promesa que resuelve un tipo AuthResponse (:Promiese<AuthResponse>)
+
+- En LoginPage.tsx, definir la función "handleLogin" manejadora del envió del formulario. Esta función nos permite obtener los valores de los inputs del formulario, sin tener que usar un useState para cada valor.
+- Agregar la prop. onSubmit=, a la etiqueta <Form, para que llama a la func manejadora, cuando se envíe el formulario, <.. onSubmit={ handleLogin } >
+- Agregar el atributo name a los inputs del formulario.
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67237666-mensajes-en-pantalla-sobre-inicio-de-sesion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
