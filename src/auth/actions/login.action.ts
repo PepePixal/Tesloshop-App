@@ -23,7 +23,7 @@ export const loginAction = async( email: string, password: string ):Promise<Auth
         return data;
 
     } catch (error) {
-        console.log(error);
+        console.log({error});
         // Vuelve a lanzar el error capturado, hacia arriba,
         // propagándolo al componente o función que llamó a la función loginAction.
         throw error;

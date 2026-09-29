@@ -1,13 +1,23 @@
 // diseño obtenido de: https://github.com/Klerith/v0-two-card-login
 
-import { Link } from "react-router"
+import { useState } from "react"
+import { Link, useNavigate } from "react-router"
+import { toast } from "sonner"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { CustomLogo } from "@/components/custom/CustomLogo"
+import { loginAction } from "@/auth/actions/login.action"
+
 
 export const LoginPage = () => {
+
+  const navigate = useNavigate();
+
+  // estado para gestionar el estilo del botón "Ingresar" tras enviar el formulario
+  const [isPosting, setIsPosting] = useState(false);
 
   // manejador del evento de envio (submit) del formulario del login de usuario.
   // Recibe param event, con un tipado que indica que viene de una etiqueta <form>, en el DOM.
@@ -15,6 +25,9 @@ export const LoginPage = () => {
     // evita la acción por defecto del navegador al enviar un formualrio,
     // para poder manejar el envio con JavaScript sin perder el estado actual.
     event.preventDefault();
+
+    // asigna true al useState isPosting (botón Ingresar)
+    setIsPosting(true);
 
     // Crea el objeto formData, instanciando la clase nativa de JavaScript FormData,
     // que obtiene automáticamente los valores de todos los campos de entrada (input, select, etc.)
@@ -28,8 +41,22 @@ export const LoginPage = () => {
     const password = formData.get('password') as string;
     //console.log( {email, password} );
 
-    
+    // llama a la func loginAction() enviando parámetros, que hace la petición http post al endpoint de la api
+    try {
+      const data = await loginAction( email, password);
+      // almacena el valor de la prop token del obj data, en el localStorage con key 'token'
+      localStorage.setItem('token', data.token);
+      console.log('re-direcionando al home');
+      // redirecciona al home
+      navigate('/');
 
+    } catch (error) {
+      //mensaje emergente (toaster tipo .error), usando toast de la libreriía sonner
+      toast.error('Correo y/o Contraseña, no validos');
+    }
+
+    // asigna false al useState isPosting (botón Ingresar)
+    setIsPosting(false);
 
   };
 
@@ -69,7 +96,8 @@ export const LoginPage = () => {
                   required
                 />
               </div>
-              <Button type="submit" className="w-full">
+              {/* el botón está deshabilitado, si la variable de estado "isPosting" es true */}
+              <Button type="submit" className="w-full" disabled={isPosting}>
                 Ingresar
               </Button>
               <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
@@ -127,4 +155,6 @@ export const LoginPage = () => {
     </div>
   )
 }
+
+
 

@@ -843,6 +843,41 @@ Esta interface nos servirá para tipar tanto las respuestas de Login, Register y
 
 🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67237666-mensajes-en-pantalla-sobre-inicio-de-sesion
 
+🔷 Sonner
+
+Sonner es una popular librería de notificaciones tipo toast (alertas emergentes) diseñada específicamente para React, por  Emil Kowalski.
+Es reconocida por su diseño elegante, excelente rendimiento y fácil de configurar e integrar en proyectos modernos.
+Instalación terminal: npm install sonner
+https://github.com/emilkowalski/sonner
+
+-----
+
+- LoginPage.tsx - en el manejador del formulario handleLogin, definir un try{} catch(){}, obtener la data del usuario, llamando al action loginAction() enviando email y password,
+- si se recibe data, almacenar el token en el localStorage y redireccionar a la pagina de inicio ('/) con navigate,
+- si se recibe error mostrar mensaje tipo toast (alerta emergente) de la librería Sonner:
+  - instalar la librería: npm i sonner
+  - en el componente raíz TesloShopApp.tsx, importar Toaster de la librería sonner y agregar el componente <Toaster /> de forma global, dentro del componente Provider <QueryClientProvider...
+  - agregar el toast tipo error con un mensaje, dentro del catch(){} 
+
+Para controlar que botón "Ingresar" esté deshabilitado mientras se esta haciendo el post del formulario:
+- agregar un useState (isPosting) dentro del LoginPage, inicializado a false,
+- cambiar el estado de isPosting a true, dentro del handleLogin tras el preventDefault()
+- cambiar el estado de isPosting a false cuando el proceso de handleLogin ha terminado,
+- en la etiqueta <Button, agregar el atributo disablet condicionado a que isPosting sea true
+
+- Probar el envió del formulario, con información tanto errónea como válida, viendo el resultado en la consola y el renderizado del mensaje toast.
+- Cuando se envía información válida, comprobar que se ha almacenado el token en el localStorage ( inspeccionar / Aplication / Storage / Local storage )
+
+
+
+
+
+
+ 
+
+
+ 
+
 
 
 
