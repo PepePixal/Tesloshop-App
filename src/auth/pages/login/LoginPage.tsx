@@ -9,12 +9,15 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { CustomLogo } from "@/components/custom/CustomLogo"
-import { loginAction } from "@/auth/actions/login.action"
+import { useAuthStore } from "@/auth/store/auth.store"
 
 
 export const LoginPage = () => {
 
   const navigate = useNavigate();
+
+  // destruc la func login, de nuestro gestor de estado useAuthStore
+  const { login } = useAuthStore()
 
   // estado para gestionar el estilo del botón "Ingresar" tras enviar el formulario
   const [isPosting, setIsPosting] = useState(false);
@@ -26,7 +29,7 @@ export const LoginPage = () => {
     // para poder manejar el envio con JavaScript sin perder el estado actual.
     event.preventDefault();
 
-    // asigna true al useState isPosting (botón Ingresar)
+    // asigna true al useState isPosting (botón Ingresar activado)
     setIsPosting(true);
 
     // Crea el objeto formData, instanciando la clase nativa de JavaScript FormData,
@@ -35,27 +38,25 @@ export const LoginPage = () => {
     // event.target es el elemento del DOM que dispara el evento, el formulario en sí mismo,
     // del que FormData recopilará los valores.
     const formData = new FormData( event.target as HTMLFormElement);
-
     // obtiene el valor de email y password del objeto formData
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
-    //console.log( {email, password} );
+    
+    // llama func login (destruc. de useAuthStore) enviando parámetros,
+    // que retorna true si el login es válido, o false si no
+    const isValid = await login( email, password);
 
-    // llama a la func loginAction() enviando parámetros, que hace la petición http post al endpoint de la api
-    try {
-      const data = await loginAction( email, password);
-      // almacena el valor de la prop token del obj data, en el localStorage con key 'token'
-      localStorage.setItem('token', data.token);
-      console.log('re-direcionando al home');
-      // redirecciona al home
+    // si el login ha sido valido (true)
+    if ( isValid ) {
+      // redirecciona al home y para el código, con return
       navigate('/');
-
-    } catch (error) {
-      //mensaje emergente (toaster tipo .error), usando toast de la libreriía sonner
-      toast.error('Correo y/o Contraseña, no validos');
+      return;
     }
 
-    // asigna false al useState isPosting (botón Ingresar)
+    // si el login no ha sido valido (false):
+    // mensaje emergente (toaster tipo .error), usando toast de la libreriía sonner
+    toast.error('Correo y/o Contraseña, no validos');
+    // asigna false al useState isPosting (botón Ingresar desactivado)
     setIsPosting(false);
 
   };

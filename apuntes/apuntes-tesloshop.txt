@@ -534,7 +534,7 @@ Su objetivo principal es simplificar la comunicación entre tu interfaz de usuar
 
 ¿Por qué deberías usarlo?
 Tradicionalmente, para obtener datos se combinaban los hooks useEffect y useState, lo que derivaba en código repetitivo (boilerplate), posibles fugas de memoria y errores difíciles de depurar en los estados de carga.
-TanStack Query te permite separar el estado del servidor del estado global del cliente (como Redux o Zustand). Esto hace que tu código sea mucho más limpio, rápido y fácil de mantener.
+TanStack Query permite separar el estado del servidor del estado global del cliente (como Redux o Zustand). Esto hace que tu código sea mucho más limpio, rápido y fácil de mantener.
 
 -----
 
@@ -743,21 +743,11 @@ shop/actions/get-products.action.ts
 - Protección de rutas
 - Autorización de rutas
 
-🔷 TanStack (recordatorio)
+🔷 TanStack 
 
-TanStack Query (anteriormente conocido como React Query) es una de las bibliotecas más populares para la gestión de estado asíncrono en desarrollo web. Nos permite almacenar en caché, sincronizar y actualizar datos del servidor en tus aplicaciones frontend.
+Conjunto de herramientas para el desarrollo web. 
+TanStack Query (anteriormente conocido como React Query) es una de las librerías más populares para la gestión de estado asíncrono en desarrollo web. Nos permite almacenar en caché, sincronizar y actualizar datos del servidor en tus aplicaciones frontend.
 
-🔷 Zustand
-
-En el desarrollo web con React, Zustand (que significa "estado" en alemán) es una biblioteca especializada en gestión de estado global, pequeña, rápida y moderna.
-
-Es una de las alternativas más populares a herramientas tradicionales como Redux o al context api de React, debido a su simplicidad y bajo consumo de recursos.
-
-Características Principales:
-- Sin Boilerplate (Código repetitivo): A diferencia de Redux, no necesitas configurar actions, reducers, dispatchers ni providers gigantescos. Su sintaxis es extremadamente limpia.
-- Basado en Ganchos (Hooks): Su API se integra de forma natural con React utilizando hooks personalizados.
-- Fuera del Árbol de Componentes: No requiere que envuelvas tu aplicación en un <Provider /> global (como Context API o Redux). El estado vive fuera de los componentes de React, lo que evita renderizados innecesarios.
-- Inmutable por debajo: Aunque actualices el estado de forma directa y sencilla, internamente maneja la inmutabilidad de manera transparente.
 
 🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67233471-continuacion-de-proyecto
 
@@ -868,8 +858,35 @@ Para controlar que botón "Ingresar" esté deshabilitado mientras se esta hacien
 - Probar el envió del formulario, con información tanto errónea como válida, viendo el resultado en la consola y el renderizado del mensaje toast.
 - Cuando se envía información válida, comprobar que se ha almacenado el token en el localStorage ( inspeccionar / Aplication / Storage / Local storage )
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67237820-gestor-de-estado-zustand
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67237997-auth-store
+
+🔷 Zustand
+
+En el desarrollo web con React, Zustand (que significa "estado" en alemán) es una librería especializada en gestión de estado global del cliente, pequeña, rápida y moderna.
+Es una de las alternativas más populares a herramientas tradicionales como Redux o al hook useContext de React, debido a su simplicidad y bajo consumo de recursos.
+Características Principales:
+- Sin Boilerplate (Código repetitivo): A diferencia de Redux, no necesitas configurar actions, reducers, dispatchers ni providers gigantescos. Su sintaxis es extremadamente limpia.
+- Basado en Ganchos (Hooks): Su API se integra de forma natural con React utilizando hooks personalizados.
+- Fuera del Árbol de Componentes: No requiere que envuelvas tu aplicación en un <Provider /> global (como Context API o Redux). El estado vive fuera de los componentes de React, lo que evita renderizados innecesarios.
+- Inmutable por debajo: Aunque actualices el estado de forma directa y sencilla, internamente maneja la inmutabilidad de manera transparente.
+
+https://zustand-demo.pmnd.rs/
+
+-----
+
+Necesitamos tener acceso global, al estado de la autenticación de los usuarios logueados, para personalizarles la UI y el acceso a las diferentes secciones de la aplicación.
+
+Gestionaremos el estado de la autenticación con el gestor de estado de terceros Zustand.
+
+- Instalar librería zustand desde terminal: npm i zustand,
+- crear el directorio y el archivo src/auth/store/auth.store.ts,
+- definir el código: Importación de create from 'zustand', tipado con type (siguiendo las instrucciones de zustand) de las Properties, Getters y Actions y la función useAuthStore
+- src/auth/pages/login/LoginPage.tsx, modificar el código para usar el action del auth.store.ts
 
 
+
+ 
 
 
 
