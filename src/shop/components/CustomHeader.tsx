@@ -6,8 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { CustomLogo } from "@/components/custom/CustomLogo";
+import { useAuthStore } from "@/auth/store/auth.store";
 
 export const CustomHeader = () => {
+
+  // obtiene el usuario y la func logout, de la autenticación del usuario
+  const { user, logout } = useAuthStore();
 
   // obtener los query params de la url y la func para modificarlos
   const [ searchParams, setSearchParams ] = useSearchParams();
@@ -122,15 +126,24 @@ export const CustomHeader = () => {
             </Button>
 
             {/* Login */}
-            <Link to="auth/login">
-              <Button 
-                variant='default'
-                size='sm'
-                className="ml-2"
-              >
-                Login
-              </Button>
-            </Link>
+            {/* mostrar "Login" o "Cerrar sesión", según el valor de user (usuario logueado) o no */}
+            
+            {
+              !user ? (
+                <Link to="auth/login">
+                  <Button variant='default' size='sm' className="ml-2">
+                    Login
+                  </Button>
+                </Link>
+
+              ): (
+                <Button variant='outline' size='sm' className="ml-2"
+                  onClick={logout}
+                >
+                  Cerrar sesión
+                </Button>
+              )
+            }
 
             {/* Admin */}
             <Link to="/admin">

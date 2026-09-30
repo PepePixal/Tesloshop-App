@@ -882,7 +882,31 @@ Gestionaremos el estado de la autenticación con el gestor de estado de terceros
 - Instalar librería zustand desde terminal: npm i zustand,
 - crear el directorio y el archivo src/auth/store/auth.store.ts,
 - definir el código: Importación de create from 'zustand', tipado con type (siguiendo las instrucciones de zustand) de las Properties, Getters y Actions y la función useAuthStore
-- src/auth/pages/login/LoginPage.tsx, modificar el código para usar el action del auth.store.ts
+- src/auth/pages/login/LoginPage.tsx, modificar el código para usar el action useAuthStore de auth.store.ts
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67239198-cerrar-sesion
+
+Para cerrar sesión si hay un user logueado:
+
+src/shop/components/CustomHeader.tsx
+- Agregar código para obtener el valor de user, de la autenticación, useAuthStore,
+- en el renderizado del botón "Login" validar el valor de user, para mostrar el botón "Login" o "Cerrar sesión"
+
+src/auth/store/auth.store.ts
+- definir una nueva aucción "logout:", para cerrar la sesión
+
+src/shop/components/CustomHeader.tsx
+- obtener la función logout, de la autenticación, useAuthStore,
+- en el renderizado, agregar atrib onclick con la función logout, al botón "Cerrar sesión"
+
+Datos del user dinámicos, en la barra lateral del panel de Admin:
+src/admin/componentes/AdminSidebar.tsx
+- agregar código para: obtener la data de user del storre useAuthStore
+- agregar iniciales, nombre y email del user en el render del final de la barra.
+
+
+
+
 
 
 
