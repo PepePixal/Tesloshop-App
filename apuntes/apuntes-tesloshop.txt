@@ -904,7 +904,48 @@ src/admin/componentes/AdminSidebar.tsx
 - agregar código para: obtener la data de user del storre useAuthStore
 - agregar iniciales, nombre y email del user en el render del final de la barra.
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67246724-accion-verificacion-de-token-con-interceptores
 
+🔷 interceptores en Axios
+
+Son funciones que Axios ejecuta antes de enviar una petición o al recibir una respuesta.
+Son muy útiles para añadir tokens de autenticación en las cabeceras o manejar errores globales
+
+Los interceptores interceptan cualquier petición http que hagamos a través de Axios con nuestra func. tesloApi y nos permiten ejecutar funciones antes de la request (petición) o después de la response (respuesta), de la petición http.
+
+Un ejemplo de modificación antes la request (petición), sería que antes de la request compruebe si existe un token en el localStorage y si existe lo envie como una Authorization type Bearer Token, en la cabecera de la petición.
+
+-----
+
+Verificar el estado de la autenticación, en el endpoint /check-status de la api
+
+Probando con Posman:
+- Loguearnos en nuestra aplicación y copiar el token del navegador: inspeccionar / Application / Storage / local storage / Value.
+- Postman: Petición GET a localhost:3000/api/auth/check-status y pegar el token en  Authorization / Auth type: Bearer Token
+- si el token es correcto y está en vigor, nos retornara 200 ok y la data del user.
+
+Crear el action para verificar la autenticación del user:
+
+- crear src/auth/actions/check-auth.action.ts y definir el código:
+- obtener el token del localStorage
+- validar si no existe token: Lanzar (throw) new Error 'No token found'
+
+- checkear la validez del token (try), con una petición http GET con Axios (en tesloApi), al endpoint /check-status, de la api:
+  - requiere enviar el token como una Authorization type Bearer Token, en la cabecera dentro de la petición http GET,
+  - en lugar de agregar header al código de la petición http, lo haremos configurando un interceptor de Axios en tesloApi.ts
+  - Editar src/api/tesloApi.ts y agregar código interceptor tipo request, que se ejecutará antes de la petición http 
+  - este interceptor validará si existe un token en el localStorage y lo enviará en la cabecera de la petición como Authorization type Bearer Token
+
+- si el check sale bien, el endpoint nos retorna la data del user con un nuevo token:
+  - reasignar a 'token' del localStorage, el valor del nuevo token recibido en la data
+  - retornar la data
+
+- si la consulta al check-status retorna error:
+  - en catch(error), eliminar el token del localStorage, porque significa que ha expirado,
+  - lanzar (throw) new Error 'Token expired or not valid'
+
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67246745-verificar-estado-de-la-autenticacion
 
 
 
