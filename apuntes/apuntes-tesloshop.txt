@@ -521,20 +521,44 @@ Esto descarga la imagen oficial del gestor de base de datos "Postgres" en docker
 
 🔷 TANSTACK QUERY
 
-TanStack Query (anteriormente conocido como React Query) es una de las bibliotecas más populares para la gestión de estado asíncrono en desarrollo web.
-En términos sencillos, es una navaja suiza para obtener, almacenar en caché, sincronizar y actualizar datos del servidor en tus aplicaciones frontend.
+TanStack Query (anteriormente conocido como React Query) es una librería para la gestión de estado asíncrono o estado del Servidor (Server State) en desarrollo web.
+En términos sencillos, es una navaja suiza para obtener, almacenar en caché, sincronizar y actualizar datos del servidor en tus aplicaciones frontend. TanStack Query no es un cliente http como Axios o fetch.
 
-¿Para qué sirve?
-Su objetivo principal es simplificar la comunicación entre tu interfaz de usuario y tus APIs (REST, GraphQL, etc.), resolviendo problemas complejos que antes requerían mucho código manual. Entre sus funciones clave destacan:
+Su objetivo principal es simplificar la comunicación entre tu interfaz de usuario y tus APIs (REST, GraphQL, etc.), resolviendo problemas complejos que antes requerían mucho código manual.
+
+Entre sus funciones clave destacan:
 - Caché inteligente: Guarda las respuestas del servidor en memoria. Si el usuario navega a otra sección y regresa, los datos se muestran de inmediato sin hacer una nueva petición innecesaria.
 - Sincronización en segundo plano: Actualiza automáticamente los datos de la pantalla cuando el usuario vuelve a enfocar la ventana del navegador o recupera la conexión a internet.
 - Gestión de estados automatizada: Proporciona de forma nativa variables de estado como isLoading, isError, isFetching y data, evitando que tengas que crearlas manualmente con useState.
 - Mutaciones sencillas: Facilita el envío de datos al servidor (crear, actualizar o borrar) y se encarga de revalidar o actualizar la caché automáticamente tras la operación.
 - Paginación y Infinite Scroll: Incluye herramientas optimizadas para cargar datos por bloques o de manera infinita a medida que el usuario hace scroll.
 
-¿Por qué deberías usarlo?
+Por qué usarlo:
 Tradicionalmente, para obtener datos se combinaban los hooks useEffect y useState, lo que derivaba en código repetitivo (boilerplate), posibles fugas de memoria y errores difíciles de depurar en los estados de carga.
-TanStack Query permite separar el estado del servidor del estado global del cliente (como Redux o Zustand). Esto hace que tu código sea mucho más limpio, rápido y fácil de mantener.
+TanStack Query permite separar el estado del servidor, del estado global del cliente (como Redux o Zustand). Esto hace que tu código sea mucho más limpio, rápido y fácil de mantener.
+
+* TanStack Query es el nombre oficial del paquete principal de código (que instalas ejecutando npm install @tanstack/react-query).
+
+* QueryClient y QueryClientProvider son simplemente clases y componentes, importados de esa misma librería para configurarla y hacerla funcionar en el proyecto de React.
+
+1. QueryClient (El Cerebro)
+
+El QueryClient es la instancia central que gestiona toda la lógica de datos asíncronos en la aplicación.
+Funciona como el "cerebro" o el motor detrás de escena.
+
+Para qué sirve:
+- Almacenamiento en caché (Cache): Guarda los resultados de tus peticiones para que, si el usuario vuelve a navegar a la misma pantalla, los datos se muestren de inmediato sin hacer otra petición innecesaria.
+- Gestión de estados: Realiza el seguimiento de estados como loading (cargando), error, success y fetching (actualizando).
+- Revalidación automática: Configura cuándo y cómo se deben actualizar los datos (por ejemplo, al volver a enfocar la ventana del navegador o cuando se reconecta a internet).
+- Mutaciones y limpieza: Permite invalidar cachés obsoletas después de crear, actualizar o eliminar datos (mutations).
+
+2. QueryClientProvider (El Proveedor / Contexto)
+
+El QueryClientProvider es un componente de React (un proveedor de contexto) que envuelve la aplicación, para conectar la instancia del QueryClient con el árbol de componentes de React.
+
+Para qué sirve:
+- Inyección de dependencias: Hace que el QueryClient esté disponible en cualquier componente hijo que necesite hacer llamadas a APIs, usando hooks como useQuery o useMutation.
+- Ámbito (Scope): Permite definir dónde empieza y termina el ciclo de vida del cliente de consultas (normalmente se coloca en la raíz de la aplicación, en App.js, main.jsx o index.js).
 
 -----
 
@@ -616,7 +640,7 @@ para obtener los productos de la BD usando el hook useQuery() de tanstack, desde
 
 🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67232419-mostrar-productos-en-pantalla
 
-Mostrar en pantalla los productos obtenidos de backend.
+Mostrar en pantalla los productos obtenidos del backend.
 
 La prop "images:" de cada product, contiene solo el nombre de la imagen o imágenes del producto, tipo "1549275-00-A_0_2000.jpg".
 Los archivos con las imágenes de los productos se obtienen del endpoint localhost:3000/api/files/product/
@@ -746,7 +770,7 @@ shop/actions/get-products.action.ts
 🔷 TanStack 
 
 Conjunto de herramientas para el desarrollo web. 
-TanStack Query (anteriormente conocido como React Query) es una de las librerías más populares para la gestión de estado asíncrono en desarrollo web. Nos permite almacenar en caché, sincronizar y actualizar datos del servidor en tus aplicaciones frontend.
+TanStack Query (anteriormente conocido como React Query) es una librería para la gestión de estado asíncrono en desarrollo web. Nos permite almacenar en caché, sincronizar y actualizar datos del servidor en tus aplicaciones frontend. No es un cliente http como Axios o fetch.
 
 
 🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67233471-continuacion-de-proyecto
@@ -863,8 +887,9 @@ Para controlar que botón "Ingresar" esté deshabilitado mientras se esta hacien
 
 🔷 Zustand
 
-En el desarrollo web con React, Zustand (que significa "estado" en alemán) es una librería especializada en gestión de estado global del cliente, pequeña, rápida y moderna.
+En el desarrollo web con React, Zustand (que significa "estado" en alemán) es una librería pequeña, rápida y moderna, especializada en gestión de estado global local del cliente (Client State) o la UI. Diseñada para controlar el estado puramente de la interfaz (como modales abiertos, filtros de UI, temas o datos de sesión locales).
 Es una de las alternativas más populares a herramientas tradicionales como Redux o al hook useContext de React, debido a su simplicidad y bajo consumo de recursos.
+
 Características Principales:
 - Sin Boilerplate (Código repetitivo): A diferencia de Redux, no necesitas configurar actions, reducers, dispatchers ni providers gigantescos. Su sintaxis es extremadamente limpia.
 - Basado en Ganchos (Hooks): Su API se integra de forma natural con React utilizando hooks personalizados.
@@ -944,15 +969,31 @@ Crear el action para verificar la autenticación del user:
   - en catch(error), eliminar el token del localStorage, porque significa que ha expirado,
   - lanzar (throw) new Error 'Token expired or not valid'
 
-
 🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67246745-verificar-estado-de-la-autenticacion
 
+La verificación del estado de autenticación debe estar muy arriba en el árbol de componentes.
+En la primera pantalla ya tenemos que saber si el usuario está autenticado, su rol y si la sesión está activa, para mostrar activados o desactivados los botones de "Admin" y "Login".
+
+El punto más alto en el árbol de componentes es src/main.tsx pero debemos dejarlo lo más simple y limpio posible.
+El siguiente punto alto es el archivo src/TesloShopApp.tsx
+
+- definir un nuevo custom provider con un funcional component (CheckAuthProvider) antes del componente principal TesloShopApp con un useQuery(), no para obtener la data, si no para obtener el isLoading del useQuery, que comprobaremos si es true, para renderizaremos un spiner "Cargando" mientras se realiza la comprobación de la sesión de usuario con checkAuthAction. 
+
+- crear src/Components/custom/CustomFullScreenLoading.tsx y definir el spiner a pantalla completa "Cargando"
+
+- reconfigurar el renderizado:
+	<QueryClientProvider client={queryClient}>
+		<CheckAuthProvider>
+			<RouterProvider router={appRouter} />
+		</CheckAuthProvider>
+		<Toaster />
+		<ReactQueryDevtools initialIsOpen={false} />
+	</QueryClientProvider>
 
 
-
-
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67246827-conectar-tanstack-con-zustand
  
-
+Conectar TanStack (Server State) con Zustand (Local Client State)
 
 
  
