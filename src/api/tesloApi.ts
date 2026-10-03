@@ -8,8 +8,9 @@ const tesloApi = axios.create({
 });
 
 // * Interceptores: *//
-// Funciones que Axios ejecuta antes de enviar una petición o al recibir una respuesta,
-// muy útiles para añadir tokens de autenticación en las cabeceras o manejar errores globales
+/* Funciones que Axios ejecuta antes de enviar una petición o al recibir una respuesta,
+   muy útiles para añadir tokens de autenticación en las cabeceras o manejar errores globales
+*/
 
 // interceptor para enviar una una Authorization type Bearer Token, 
 // en la cabecera de la petición (request) http, si existe el token

@@ -995,6 +995,14 @@ El siguiente punto alto es el archivo src/TesloShopApp.tsx
  
 Conectar TanStack (Server State) con Zustand (Local Client State)
 
+Todo lo relacionado a la autenticación debería estar en el store (auth.store), pero actualmente tenemos la llamada al checkAuthAction en el componente principal TesloShopApp.tsx. Tenemos que trasladar la llamada al al checkAuthAction a nuestro Store auth.sotre.ts
+
+- src/auth/store/auth.store.ts
+- declarar una nueva //Action, la función asíncrona "checkAuthStatus",
+- definir la función y su código, dentro del useAuthStore
+
+
+
 
  
 

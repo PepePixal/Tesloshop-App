@@ -4,6 +4,7 @@
 import { create } from 'zustand'
 import type { User } from '@/interfaces/user.interface'
 import { loginAction } from '../actions/login.action';
+import { checkAuthAction } from '../actions/check-auth.action';
 
 // Tipado para el estado de la autenticación (logueo) del usuario,
 // uso de type para el tipado, recomendado pro zustand
@@ -20,6 +21,7 @@ type AuthState = {
     // Actions:
     login: (email: string, password: string) => Promise<boolean>;
     logout: () => void;
+    checkAuthStatus: () => Promise<boolean>;
 };
 
 
@@ -40,8 +42,8 @@ export const useAuthStore = create<AuthState>()((set) => ({
             const data = await loginAction( email, password);
             // almacena el valor de la prop token del obj data, en el localStorage con key 'token'
             localStorage.setItem('token', data.token);
-            // graba la información en el estado y detona el rerender de React
-            set({ user: data.user, token: data.token });
+            // graba la información del estado y detona el rerender de React
+            set({ user: data.user, token: data.token, authStatus: 'authenticated' });
             // como todo ha salido bien
             return true;
 
@@ -49,8 +51,8 @@ export const useAuthStore = create<AuthState>()((set) => ({
             // si la llamada sale mal,
             // elimina el token del localStorage (por precaución)
             localStorage.removeItem('token'); 
-            //asigna null al user y al token
-            set({ user: null, token: null });
+            // graba la información del estado
+            set({ user: null, token: null, authStatus: 'not-authenticated' });
             // como ha salido mal
             return false;
         }
@@ -59,9 +61,26 @@ export const useAuthStore = create<AuthState>()((set) => ({
     logout: () => {
         // elimina el token del localStorage
         localStorage.removeItem('token'); 
-        //asigna null al user y al token
-        set({ user: null, token: null });
-    }
+        // graba la información del estado
+        set({ user: null, token: null, authStatus: 'not-authenticated' });
+    },
+
+    checkAuthStatus: async() => {
+        try {
+            // destruct user y token, devueltos por chechkAuthAction (si todo va bien)
+            const { user, token }=  await checkAuthAction();
+            // graba la información del estado
+            set({ user: user, token: token, authStatus: 'authenticated' });
+            // como todo ha ido bién
+            return true;
+            
+        } catch (error) {
+            // graba la información del estado
+            set({ user: undefined, token: undefined, authStatus: 'not-authenticated' });
+            // como no ha ido bien
+            return false;
+        }
+    },
 
 }));
 

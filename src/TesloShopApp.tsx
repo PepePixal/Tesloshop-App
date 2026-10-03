@@ -18,9 +18,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 // cpmponente para renderizar mensajes en pantalla, de la librería Sonner
 import { Toaster } from 'sonner';
 //acción asíncrona encargada de verificar si el usuario cuenta con una sesión activa.
-import { checkAuthAction } from "./auth/actions/check-auth.action";
 //componente visual personalizado para mostrar una pantalla de carga completa.
 import { CustomFullScreenLoading } from "./components/custom/CustomFullScreenLoading";
+import { useAuthStore } from "./auth/store/auth.store";
 
 // Crea la instancia global del cliente de consultas.
 // Este objeto se encarga de administrar la caché de todas las peticiones HTTP que haga tu aplicación.
@@ -31,10 +31,12 @@ const queryClient = new QueryClient();
 // y lo retorna sin tocar, una vez comprobado el estado de la autenticación del usuario.
 const CheckAuthProvider = ({ children }: PropsWithChildren ) => {
 
+  const { checkAuthStatus } = useAuthStore();
+
   //hook useQuery de React Query, para saber si la petición está en curso.
   const { isLoading } = useQuery({
     queryKey: ['auth'],
-    queryFn: checkAuthAction,
+    queryFn: checkAuthStatus,
     //no reintentar si falla la petición
     retry: false,
     //opcional - reenviar la petición cada hora y media, para revalidar el token

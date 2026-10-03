@@ -1,5 +1,5 @@
 /* action que verifica si el usuario tiene una sesión activa válida en el navegador,
- comprobando si el token del localStorage es válido */
+ comprobando si hay token en el localStorage y es válido */
 
 import { tesloApi } from "@/api/tesloApi";
 import type { AuthResponse } from "../interfaces/auth.response";
