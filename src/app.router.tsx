@@ -9,17 +9,19 @@ import { RegisterPage } from "./auth/pages/register/RegisterPage";
 import { DashboardPage } from "./admin/pages/dashboard/DashboardPage";
 import { AdminProductsPage } from "./admin/pages/products/AdminProductsPage";
 import { AdminProductPage } from "./admin/pages/product/AdminProductPage";
+import { AdminRoute, NotAuthenticatedRoute } from "./components/routes/ProtectedRoutes";
 
 // carga perezosa (lazy) de los layouts de auth y admin
 const AuthLayout = lazy(() => import('./auth/layouts/AuthLayout'));     //requiere export default
 const AdminLayout = lazy(() => import('./admin/layouts/AdminLayout'));  //requeire export default
 
 export const appRouter = createBrowserRouter([
-    // Las rutas children NO inician con "/"
     // Main routes
     {
         path: '/',
+        // no requiere protección de ruta
         element: <ShopLayout />,
+        // Las rutas children (hijas) NO inician con "/"
         children: [
             {
                 index: true,
@@ -39,7 +41,13 @@ export const appRouter = createBrowserRouter([
     // Auth Routes
     {
         path: '/auth',
-        element: <AuthLayout />,
+        // comp. <AuthLayout> y sus children, envueltos por el com protector de ruta  <NotAuthenticatedRoute>
+        element: (
+            <NotAuthenticatedRoute>
+                <AuthLayout />
+            </NotAuthenticatedRoute>
+        ),
+        // Las rutas children (hijas) NO inician con "/"
         children: [
             // para que /auth lleve directamente la /auth/login
             {
@@ -60,7 +68,13 @@ export const appRouter = createBrowserRouter([
     // Admin Rotues
     {
         path: '/admin',
-        element: <AdminLayout />,
+        // comp. <AdminLayout> y sus children, envueltos por el com protector de ruta  <AdminRoute>
+        element: (
+            <AdminRoute>
+                <AdminLayout />
+            </AdminRoute>
+        ),
+        // Las rutas children (hijas) NO inician con "/"
         children: [
             {
                 index: true,

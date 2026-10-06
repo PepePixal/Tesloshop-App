@@ -1020,10 +1020,28 @@ src/shop/components/CustomHeader.tsx
 
 ⚠️ Todo lo anterior no protege la ruta /admin, solo activa o desactiva el botón "Admin". Tenemos que proteger al ruta /admin, por rol.
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67247093-proteccion-de-ruta-por-roles
+
+Grupos de rutas y protección
+- / - /product - /gender - rutas de la tienda (shop) - no necesitan protección, puede acceder cualquier usuario autenticado o no.
+- /auth routes - rutas de autenticación - aconsejable protección, un usuario ya autenticado no necesita acceder a /login ni a /register
+- /admin routes - rutas de Administración - tienen que estar protegidas, solo los usuarios autenticados y con rol admin, pueden acceder 
+
+app.router.tsx
+La lógica de código para proteger las rutas no la podemos definir dentro de createBrowserRouter([]), porque no es un functional component, es un arreglo con las rutas.
+Crearemos un nuevo archivo con los componentes de protección (Route Guards) para cada ruta y sus childrens. Con estos nuevos componentes envolveremos a cada componente padre (y por tanto a sus childrens) de la ruta que queramos proteger. Si la validación del nuevo componente de protección se cumple, se retornará el componente envuelto y sus childrens, para que se rendericen.
+
+src/components/routes/ProtectedRoutes.tsx
+- definir los componentes:
+  - AuthenticatedRoute (Ruta Protegida)
+  - AdminRoute (Ruta de Administrador)
+  - NotAuthenticatedRoute (Ruta Pública / Solo para invitados. (Opcional)
+
+app.router.tsx
+// Auth Routes - envolver el componente padre <AuthLayout /> dentro del comp. protector <NotAuthenticationRoute>...</NotAuthenticationRoute>
+// Auth Routes - envolver el componente padre <AdminLayout /> dentro del comp. protector <AdminRoute>...</AdminRoute>
 
 
-
- 
 
 
  
