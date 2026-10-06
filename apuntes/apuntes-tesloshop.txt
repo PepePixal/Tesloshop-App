@@ -997,9 +997,28 @@ Conectar TanStack (Server State) con Zustand (Local Client State)
 
 Todo lo relacionado a la autenticación debería estar en el store (auth.store), pero actualmente tenemos la llamada al checkAuthAction en el componente principal TesloShopApp.tsx. Tenemos que trasladar la llamada al al checkAuthAction a nuestro Store auth.sotre.ts
 
-- src/auth/store/auth.store.ts
+src/auth/store/auth.store.ts
 - declarar una nueva //Action, la función asíncrona "checkAuthStatus",
 - definir la función y su código, dentro del useAuthStore
+
+src/TesloShopApp.tsx
+- obtener la func checkAuthStatus del Store useAuthStore,
+- usar la func checkAuthStatus en el queryFn: checkAuthStatus,
+
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67247052-zustand-getters-autorizacion
+
+La autorización es la comprobación del rol del usuario, si tiene rol administrador se muestra el botón de "Admin" en el header y se permite el acceso al panel administrativo.
+
+auth.store.ts
+- declarar el //Getter "isAdmin" en el type AuthState
+- implementar la función //Getter "isAdmin", en el useAuthStore
+
+src/shop/components/CustomHeader.tsx
+- obtener el authStatus, isAdmin y logout de useAuthStore(),
+- en el renderizado del botón Login, cambiar la lógica de user por authStatus,
+- en el renderizado del botón Admin, definir la lógica para que solo se muestre si isAdmin es true.
+
+⚠️ Todo lo anterior no protege la ruta /admin, solo activa o desactiva el botón "Admin". Tenemos que proteger al ruta /admin, por rol.
 
 
 

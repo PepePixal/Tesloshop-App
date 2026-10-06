@@ -11,13 +11,16 @@ import { checkAuthAction } from '../actions/check-auth.action';
 type AuthStatus = 'authenticated' | 'not-authenticated' | 'checking';
 
 // Tipado para el usuario 
-// uso de type para el tipado, recomendado pro zustand
+// uso de type para el tipado, recomendado por zustand
 type AuthState = {
     // Properties:
-    user: User | null,      //el valor puede ser null
-    token: string | null,   //el valor puede ser null
-    authStatus: AuthStatus,
+    user: User | null;      //el valor puede ser null
+    token: string | null;   //el valor puede ser null
+    authStatus: AuthStatus;
+
     // Getters:
+    isAdmin: () => boolean;
+
     // Actions:
     login: (email: string, password: string) => Promise<boolean>;
     logout: () => void;
@@ -26,12 +29,17 @@ type AuthState = {
 
 
 // define el store
-export const useAuthStore = create<AuthState>()((set) => ({
+export const useAuthStore = create<AuthState>()((set, get) =>({
     // Estado inicial en el store:
     user: null,
     token: null,
     authStatus: 'checking',
 
+    // Getters
+    isAdmin: () => {
+        const roles = get().user?.roles || [];
+        return roles.includes('admin');
+    },
     // Actions:
 
     login: async(email: string, password: string) => {
@@ -81,6 +89,7 @@ export const useAuthStore = create<AuthState>()((set) => ({
             return false;
         }
     },
+
 
 }));
 

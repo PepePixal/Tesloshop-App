@@ -31,9 +31,10 @@ const queryClient = new QueryClient();
 // y lo retorna sin tocar, una vez comprobado el estado de la autenticación del usuario.
 const CheckAuthProvider = ({ children }: PropsWithChildren ) => {
 
+  // Obtiene la función que verificar si el usuario tiene una sesión activa desde el store de autenticación.
   const { checkAuthStatus } = useAuthStore();
 
-  //hook useQuery de React Query, para saber si la petición está en curso.
+  //hook useQuery de React Query, realiza la peticón y comprueba si esta en curso (isLoading).
   const { isLoading } = useQuery({
     queryKey: ['auth'],
     queryFn: checkAuthStatus,
@@ -41,7 +42,7 @@ const CheckAuthProvider = ({ children }: PropsWithChildren ) => {
     retry: false,
     //opcional - reenviar la petición cada hora y media, para revalidar el token
     refetchInterval: 1000 * 60 * 60 *1.5,
-    //opcional - recuperar el foco
+    //opcional - reenviar la petición, cuando el usuario regresa a la pestaña del navegador.
     refetchOnWindowFocus: true,
   });
 

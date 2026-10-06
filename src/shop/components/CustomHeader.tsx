@@ -11,7 +11,7 @@ import { useAuthStore } from "@/auth/store/auth.store";
 export const CustomHeader = () => {
 
   // obtiene el usuario y la func logout, de la autenticación del usuario
-  const { user, logout } = useAuthStore();
+  const { authStatus, isAdmin, logout } = useAuthStore();
 
   // obtener los query params de la url y la func para modificarlos
   const [ searchParams, setSearchParams ] = useSearchParams();
@@ -126,10 +126,10 @@ export const CustomHeader = () => {
             </Button>
 
             {/* Login */}
-            {/* mostrar "Login" o "Cerrar sesión", según el valor de user (usuario logueado) o no */}
+            {/* mostrar "Login" o "Cerrar sesión", según el valor de authStatus */}
             
             {
-              !user ? (
+              (authStatus === 'not-authenticated') ? (
                 <Link to="auth/login">
                   <Button variant='default' size='sm' className="ml-2">
                     Login
@@ -146,16 +146,20 @@ export const CustomHeader = () => {
             }
 
             {/* Admin */}
-            <Link to="/admin">
-              <Button 
-                variant='destructive'
-                size='sm'
-                className="ml-2"
-              >
-                Admin
-              </Button>
-            </Link>
-            
+            {/* mostrar el botón "Admin" solo si isAdmin es true */}
+            {
+              isAdmin() && (
+                <Link to="/admin">
+                  <Button 
+                    variant='destructive'
+                    size='sm'
+                    className="ml-2"
+                  >
+                    Admin
+                  </Button>
+                </Link>
+              )
+            }
           </div>
         </div>
       </div>
