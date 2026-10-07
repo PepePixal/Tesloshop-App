@@ -43,7 +43,7 @@ export const useAuthStore = create<AuthState>()((set, get) =>({
     // Actions:
 
     login: async(email: string, password: string) => {
-        console.log({email, password});
+        // console.log({email, password});
 
         try {
             // llama func loginAction() enviando paráms, que hace la petición http post al endpoint de la api

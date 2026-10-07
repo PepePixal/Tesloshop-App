@@ -54,7 +54,7 @@ export const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) 
 
   // obtine data de user del store useAuthStore
   const { user } = useAuthStore();
-  console.log({user})
+  // console.log({user})
 
   return (
     <div className={`bg-white border-r border-gray-200 transition-all duration-300 ease-in-out ${

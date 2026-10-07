@@ -1,7 +1,13 @@
 import React from 'react';
 import { Search, Bell, MessageSquare, Settings } from 'lucide-react';
+import { useAuthStore } from '@/auth/store/auth.store';
 
 export const AdminHeader: React.FC = () => {
+
+  
+  // obtine data de user del store useAuthStore
+  const { user } = useAuthStore();
+
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4 h-18">
       <div className="flex items-center justify-between">
@@ -33,7 +39,8 @@ export const AdminHeader: React.FC = () => {
           </button>
 
           <div className="w-8 h-8 bg-linear-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm cursor-pointer hover:shadow-lg transition-shadow">
-            JD
+              {/* obtiene las dos primeras letras del nombre */}
+              { user?.fullName.substring(0,2)}
           </div>
         </div>
       </div>

@@ -7,8 +7,12 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { CustomLogo } from "@/components/custom/CustomLogo";
 import { useAuthStore } from "@/auth/store/auth.store";
+import { Label } from '@/components/ui/label';
 
 export const CustomHeader = () => {
+
+    // obtine data de user del store useAuthStore
+    const { user } = useAuthStore();
 
   // obtiene el usuario y la func logout, de la autenticación del usuario
   const { authStatus, isAdmin, logout } = useAuthStore();
@@ -127,7 +131,6 @@ export const CustomHeader = () => {
 
             {/* Login */}
             {/* mostrar "Login" o "Cerrar sesión", según el valor de authStatus */}
-            
             {
               (authStatus === 'not-authenticated') ? (
                 <Link to="auth/login">
@@ -160,6 +163,25 @@ export const CustomHeader = () => {
                 </Link>
               )
             }
+
+            
+            {/* Avatar */}
+            {/* mostrar Invitado o el Avatar del user, según el valor de authStatus */}
+            {
+              (authStatus === 'not-authenticated') ? (
+
+                  <Label className='text-sm font-light' >
+                    Invitado
+                  </Label>
+                
+              ): (
+                  <Button variant='ghost' size='sm' className="ml-2">
+                    {/* obtiene las dos primeras letras del nombre */}
+                    { (user?.email)}
+                  </Button>
+              )
+            }
+
           </div>
         </div>
       </div>
