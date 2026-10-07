@@ -1,18 +1,75 @@
 // diseño copiado y adaptado de LoginPages.tsx
 
+import { useState } from "react"
+import { Link, useNavigate } from "react-router"
+import { toast } from "sonner"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { CustomLogo } from "@/components/custom/CustomLogo"
-import { Link } from "react-router"
+import { useAuthStore } from "@/auth/store/auth.store"
+
 
 export const RegisterPage = () => {
+
+  // instancia de la func. navigate, de react-router
+  const navigate = useNavigate();
+
+  // destruc la func register, de nuestro gestor de estado useAuthStore
+  const { register } = useAuthStore()
+
+  // estado con el hook de react useState,
+  // para gestionar el estilo del botón "Crear cuenta" tras enviar el formulario
+  const [isPosting, setIsPosting] = useState(false);
+
+  // manejador del evento de envio (submit) del formulario de registro de usuario.
+  // Recibe param event, con un tipado que indica que viene de una etiqueta <form>, en el DOM.
+  const handleRegister = async( event: React.SubmitEvent<HTMLFormElement>) => {
+    // evita la acción por defecto del navegador al enviar un formualrio,
+    // para poder manejar el envio con JavaScript sin perder el estado actual.
+    event.preventDefault();
+
+    // asigna true al useState isPosting (botón "Crear cuenta" activado)
+    setIsPosting(true);
+
+    // Crea el objeto formData, instanciando la clase nativa de JavaScript FormData,
+    // que obtiene automáticamente los valores de todos los campos de entrada (input, select, etc.)
+    // que tengan el atributo name dentro del formulario.
+    // event.target es el elemento del DOM que dispara el evento, el formulario en sí mismo,
+    // del que FormData recopilará los valores.
+    const formData = new FormData( event.target as HTMLFormElement);
+    // obtiene el valor de fullName, email y password del objeto formData
+    const fullName = formData.get('fullName') as string;
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    
+    // llama func register (destruc. de useAuthStore) enviando parámetros,
+    // que retorna true si el registro es válido, o false si no
+    const isValid = await register( email, password, fullName);
+
+    // si el registro ha sido valido (true)
+    if ( isValid ) {
+      // redirecciona al home y para el código, con return
+      navigate('/');
+      return;
+    }
+
+    // si el registro no ha sido valido (false):
+    // mensaje emergente (toaster tipo .error), usando toast de la libreriía sonner
+    toast.error('Ya existe un usuario con ese correo');
+    // asigna false al useState isPosting (botón "Crear cuenta" desactivado)
+    setIsPosting(false);
+
+  };
+
+
   return (
     <div className={"flex flex-col gap-6"}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form className="p-6 md:p-8" onSubmit={ handleRegister }>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <CustomLogo />
@@ -20,11 +77,23 @@ export const RegisterPage = () => {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="fullName">Nombre</Label>
-                <Input id="fullName" type="text" placeholder="Nombre completo" required />
+                <Input 
+                  id="fullName"
+                  type="text"
+                  name="fullName"
+                  placeholder="Nombre completo"
+                  required
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Correo</Label>
-                <Input id="email" type="email" placeholder="mail@example.com" required />
+                <Input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="mail@example.com"
+                  required
+                />
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
@@ -33,9 +102,16 @@ export const RegisterPage = () => {
                     ¿Olvidaste tu contraseña?
                   </a>
                 </div>
-                <Input id="password" type="password" required placeholder="Contraseña" />
+                <Input
+                  id="password"
+                  type="password"
+                  name="password"
+                  placeholder="Contraseña"
+                  required
+                />
               </div>
-              <Button type="submit" className="w-full">
+              {/* el botón está deshabilitado, si la variable de estado "isPosting" es true */}
+              <Button type="submit" className="w-full" disabled={isPosting}>
                 Crear cuenta
               </Button>
               <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">

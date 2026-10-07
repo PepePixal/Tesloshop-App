@@ -14,6 +14,7 @@ import { useAuthStore } from "@/auth/store/auth.store"
 
 export const LoginPage = () => {
 
+  // instancia de la func. navigate, de react-router
   const navigate = useNavigate();
 
   // destruc la func login, de nuestro gestor de estado useAuthStore

@@ -1,10 +1,13 @@
-/* gestor de estado del auth del usuario,
- con el gestor de estado de terceros, zustand */
+/*
+gestor de estado de la autenticación (auth) del usuario (user),
+ con el gestor de estado de terceros, zustand 
+*/
 
 import { create } from 'zustand'
 import type { User } from '@/interfaces/user.interface'
 import { loginAction } from '../actions/login.action';
 import { checkAuthAction } from '../actions/check-auth.action';
+import { registerAction } from '../actions/register.action';
 
 // Tipado para el estado de la autenticación (logueo) del usuario,
 // uso de type para el tipado, recomendado pro zustand
@@ -25,6 +28,9 @@ type AuthState = {
     login: (email: string, password: string) => Promise<boolean>;
     logout: () => void;
     checkAuthStatus: () => Promise<boolean>;
+
+    // TODO register
+    register: (email: string, password: string, fullName: string) => Promise<boolean>;
 };
 
 
@@ -90,6 +96,31 @@ export const useAuthStore = create<AuthState>()((set, get) =>({
         }
     },
 
+
+    // TODO register
+    register: async(email: string, password: string, fullName: string) => {
+        // console.log({email, password});
+
+        try {
+            // llama func registerAction() enviando paráms, que hace la petición http post al endpoint de la api
+            const data = await registerAction( email, password, fullName);
+            // almacena el valor de la prop token del obj data, en el localStorage con key 'token'
+            localStorage.setItem('token', data.token);
+            // graba la información del estado y detona el rerender de React
+            set({ user: data.user, token: data.token, authStatus: 'authenticated' });
+            // como todo ha salido bien
+            return true;
+
+        } catch (error) {
+            // si la llamada sale mal,
+            // elimina el token del localStorage (por precaución)
+            localStorage.removeItem('token'); 
+            // graba la información del estado
+            set({ user: null, token: null, authStatus: 'not-authenticated' });
+            // como ha salido mal
+            return false;
+        }
+    },
 
 }));
 

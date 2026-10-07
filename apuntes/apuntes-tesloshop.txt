@@ -1041,12 +1041,36 @@ app.router.tsx
 // Auth Routes - envolver el componente padre <AuthLayout /> dentro del comp. protector <NotAuthenticationRoute>...</NotAuthenticationRoute>
 // Auth Routes - envolver el componente padre <AdminLayout /> dentro del comp. protector <AdminRoute>...</AdminRoute>
 
+🟠 https://cursos.devtalles.com/courses/take/react-de-cero/lessons/67247507-tarea-registro-de-usuarios
 
+El registro de un nuevo usuario en la BD se hace enviando una petición POST al endpoint localhost:3000/api/auth/register de la API del serv local.
 
+Postman
+- Probar una petición POST al endpoint: localhost:3000/api/auth/register , enviando en el Body un raw JSON:
+  {
+	"email": "pepe@gmail.com",
+	"password": Abc123,
+	"fullName": "Pepe Mari"
 
- 
+  }
 
+La respuesta del endpoint de la api debería ser un "201 Created" y nos devuelve los datos de "user" con rol "user" y un "token" para poder autenticarse en la aplicación. 
 
+Crear lógica de Registro:
+- crear src/auth/actions/register.action.ts
+- implementar el código, lógica parecida a la del login, pero recibiendo también el fullName, 
+
+- src/auth/store/auth.store.ts
+- definir el //Action register:, en el type AuthState,
+- implementar la //Action, función register: en el useAuthStore, que es muy similar a la de login:
+
+- editar src/auth/pages/register/RegisterPage.tsx
+- implementar el código muy parecido al de LoginPage.tsx
+
+Probar el registro de nuevos usuarios:
+
+Jose Hernandez / joseh@gmail.com / Abc123
+Perico / josehp@gmail.com / Abc123
 
 
 
